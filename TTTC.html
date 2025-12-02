@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Weight We Carry</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== CSS RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7; /* Slightly looser for better desktop reading */
+      color: #2C2C2C;
+      background-color: #F0EFE9;
+      overflow-x: hidden;
+    }
+
+    /* ===== NOISE OVERLAY ===== */
+    .noise-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    .font-literary {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .font-mono {
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    
+    /* ===== STICKY WEIGHT COUNTER ===== */
+    .sticky-counter {
+      position: fixed;
+      top: 2rem;
+      /* Mobile/Default Position */
+      right: 1.5rem; 
+      z-index: 1000;
+      text-align: right;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+    }
+
+    /* DESKTOP FIX: Anchor counter to the content, not the screen edge */
+    @media (min-width: 1024px) {
+      .sticky-counter {
+        right: auto;
+        /* Center of screen + half content width + padding */
+        left: calc(50% + 320px); 
+        top: 40vh; /* Eye level */
+        text-align: left;
+      }
+    }
+    
+    .sticky-counter.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .sticky-counter-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #5C6B4A;
+      margin-bottom: 0.25rem;
+      transition: color 0.3s ease;
+    }
+    
+    .sticky-counter-number {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2C2C2C;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      transition: color 0.3s ease;
+    }
+    
+    .sticky-counter-number.adding {
+      color: #8B4A3C;
+    }
+    
+    .sticky-counter-number.subtracting {
+      color: #5C6B4A;
+      opacity: 0.7;
+    }
+
+    .sticky-counter-number.glitch {
+      color: #D4A84B;
+      text-shadow: 2px 0 #8B4A3C, -2px 0 #5C6B4A;
+      animation: glitch-anim 0.3s infinite;
+    }
+    
+    /* Year mode styling */
+    .sticky-counter.year-mode .sticky-counter-number {
+        color: #F5F2EB;
+        font-family: 'IBM Plex Mono', monospace;
+        letter-spacing: -2px;
+    }
+    
+    .sticky-counter.year-mode .sticky-counter-unit {
+        opacity: 0; /* Hide 'lbs' */
+    }
+    
+    .sticky-counter.year-mode .sticky-counter-label {
+        color: #D4A84B;
+    }
+
+    @keyframes glitch-anim {
+      0% { transform: translate(0) }
+      20% { transform: translate(-2px, 2px) }
+      40% { transform: translate(-2px, -2px) }
+      60% { transform: translate(2px, 2px) }
+      80% { transform: translate(2px, -2px) }
+      100% { transform: translate(0) }
+    }
+    
+    .sticky-counter-unit {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: #5C6B4A;
+      transition: opacity 0.5s;
+    }
+    
+    /* Dark mode for sticky counter */
+    .sticky-counter.dark .sticky-counter-number {
+      color: #F5F2EB;
+    }
+    
+    .sticky-counter.dark .sticky-counter-label,
+    .sticky-counter.dark .sticky-counter-unit {
+      color: #888;
+    }
+    
+    /* ===== SECTION BASE ===== */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 6rem 1rem; /* Less side padding, focus on center */
+      text-align: center;
+      position: relative;
+    }
+    
+    /* ===== ACT I: LIGHT THEME ===== */
+    .act-1 {
+      background-color: #F0EFE9;
+      color: #2C2C2C;
+    }
+    
+    /* ===== ACT II & III: DARK THEME ===== */
+    .act-2, .act-3 {
+      background-color: #111111;
+      color: #F5F2EB;
+    }
+    
+    /* ===== HOOK SECTION ===== */
+    .hook {
+      min-height: 100vh;
+    }
+    
+    .hook-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem); /* Reduced max size for tighter feel */
+      max-width: 550px; /* Tighter column */
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+    }
+    
+    .hook-text .highlight {
+      color: #5C6B4A;
+      font-weight: 600;
+      border-bottom: 2px solid rgba(92, 107, 74, 0.3);
+    }
+    
+    .hook-text .highlight-rust {
+      color: #8B4A3C;
+      font-weight: 600;
+      border-bottom: 2px solid rgba(139, 74, 60, 0.3);
+    }
+    
+    /* ===== SCROLL INDICATOR ===== */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* ===== CATALOG SECTION ===== */
+    .catalog-section {
+      min-height: auto;
+      padding: 6rem 1rem 8rem;
+    }
+    
+    .catalog-intro {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: #5C6B4A;
+      margin-bottom: 4rem;
+      opacity: 0.9;
+    }
+    
+    .catalog-grid {
+      display: grid;
+      /* Force tighter columns even on desktop to mimic mobile scroll length */
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      max-width: 550px; /* Tighter layout */
+      width: 100%;
+    }
+    
+    .catalog-item {
+      padding: 1.5rem;
+      border: 1px solid rgba(92, 107, 74, 0.2);
+      text-align: left;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+      background: rgba(255,255,255,0.5);
+    }
+    
+    .catalog-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .catalog-item.counted {
+      background: #5C6B4A;
+      border-color: #5C6B4A;
+    }
+    
+    .catalog-item.counted .item-name,
+    .catalog-item.counted .item-weight {
+      color: #F0EFE9;
+    }
+    
+    .item-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #5C6B4A;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+    
+    .item-weight {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2C2C2C;
+      transition: color 0.3s ease;
+    }
+    
+    /* Special styling for Letters */
+    .catalog-item[data-weight="0"].counted {
+      background: #8B4A3C;
+      border-color: #8B4A3C;
+    }
+
+    /* ===== WEIGHT TOTAL ===== */
+    .weight-total {
+      min-height: 100vh;
+    }
+    
+    .counter-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #5C6B4A;
+      margin-bottom: 1rem;
+    }
+    
+    .counter-number {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(4rem, 15vw, 10rem);
+      font-weight: 700;
+      color: #2C2C2C;
+      line-height: 1;
+    }
+    
+    .counter-unit {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.5rem;
+      color: #5C6B4A;
+      margin-top: 0.5rem;
+    }
+    
+    .counter-context {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #8B4A3C;
+      margin-top: 2rem;
+      max-width: 400px;
+    }
+    
+    /* ===== THE TURN ===== */
+    .turn-section {
+      background: linear-gradient(to bottom, #F0EFE9 0%, #111111 100%);
+      min-height: 150vh;
+    }
+    
+    .turn-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      max-width: 550px;
+      line-height: 1.8;
+      color: #F5F2EB;
+      margin-top: 50vh;
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* ===== EMOTIONAL CATALOG ===== */
+    .emotional-catalog {
+      min-height: auto;
+      padding: 8rem 2rem;
+    }
+    
+    .emotional-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem 3rem;
+      max-width: 600px;
+    }
+    
+    .emotional-item {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      color: #8B4A3C;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      cursor: default;
+    }
+    
+    .emotional-item:hover {
+        color: #D4A84B;
+        text-shadow: 0 0 10px rgba(212, 168, 75, 0.3);
+    }
+    
+    .emotional-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* ===== NARRATIVE SECTION ===== */
+    .narrative-section {
+      min-height: 100vh;
+    }
+    
+    .narrative-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      max-width: 550px;
+      line-height: 2;
+      color: #F5F2EB;
+      opacity: 0.95;
+    }
+    
+    .narrative-text em {
+      color: #D4A84B;
+      font-style: normal;
+    }
+    
+    /* ===== STAT SECTIONS ===== */
+    .stat-section {
+      min-height: 100vh;
+    }
+    
+    .stat-number {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 700;
+      color: #D4A84B;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    
+    .stat-context {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      max-width: 450px;
+      color: #F5F2EB;
+      opacity: 0.85;
+      line-height: 1.7;
+    }
+    
+    .stat-source {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    /* ===== QUOTE SECTION ===== */
+    .quote-section {
+      min-height: 60vh;
+    }
+    
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      max-width: 600px;
+      line-height: 1.9;
+      color: #F5F2EB;
+      opacity: 0.9;
+    }
+    
+    .quote-attribution {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      color: #8B4A3C;
+      margin-top: 2rem;
+    }
+    
+    /* ===== THE CLOSE ===== */
+    .close-section {
+      min-height: 300vh; /* Long scroll for time travel */
+      background-color: #050505;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* Text at bottom */
+      align-items: center;
+      padding-bottom: 20vh;
+      position: relative;
+    }
+    
+    .close-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.25rem, 2vw, 1.5rem);
+      max-width: 550px;
+      line-height: 1.8;
+      color: #F5F2EB;
+      opacity: 0; /* Controlled by JS now */
+      transition: opacity 1s ease;
+      text-align: center;
+      position: sticky;
+      bottom: 20vh;
+    }
+    
+    .close-text.visible {
+        opacity: 1;
+    }
+
+    .close-text .final-line {
+        display: block;
+        margin-top: 3rem;
+        color: #D4A84B;
+        font-style: italic;
+    }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .sticky-counter {
+        right: 1.5rem;
+        left: auto;
+        top: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="noise-overlay"></div>
+
+  <!-- Sticky Weight Counter -->
+  <div class="sticky-counter" id="sticky-counter">
+    <p class="sticky-counter-label" id="counter-label">Carrying</p>
+    <p class="sticky-counter-number" id="running-weight">0</p>
+    <p class="sticky-counter-unit">lbs</p>
+  </div>
+
+  <!-- ===== ACT I: THE HOOK ===== -->
+  <section class="act-1 hook">
+    <p class="hook-text">
+      A soldier carries <span class="highlight">68 pounds</span> into war.<br><br>
+      He carries <span class="highlight-rust">200 pounds</span> home.
+    </p>
+    <div class="scroll-indicator">Scroll</div>
+  </section>
+
+  <!-- ===== THE CATALOG ===== -->
+  <section class="act-1 catalog-section" id="catalog-section">
+    <p class="catalog-intro">"The things they carried were largely determined by necessity."</p>
+    <div class="catalog-grid">
+      <div class="catalog-item" data-weight="5" data-delay="0">
+        <p class="item-name">Steel helmet</p>
+        <p class="item-weight">5 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="6.7" data-delay="100">
+        <p class="item-name">Flak jacket</p>
+        <p class="item-weight">6.7 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="7.5" data-delay="200">
+        <p class="item-name">M-16 rifle</p>
+        <p class="item-weight">7.5 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="6.8" data-delay="300">
+        <p class="item-name">Ammunition</p>
+        <p class="item-weight">6.8 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="6.5" data-delay="400">
+        <p class="item-name">Canteens (full)</p>
+        <p class="item-weight">6.5 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="8" data-delay="500">
+        <p class="item-name">C-rations</p>
+        <p class="item-weight">8 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="2" data-delay="600">
+        <p class="item-name">Poncho</p>
+        <p class="item-weight">2 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="1.5" data-delay="700">
+        <p class="item-name">First aid kit</p>
+        <p class="item-weight">1.5 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="4" data-delay="800">
+        <p class="item-name">Grenades (×4)</p>
+        <p class="item-weight">4 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="5" data-delay="900">
+        <p class="item-name">Entrenching tool</p>
+        <p class="item-weight">5 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="15" data-delay="1000">
+        <p class="item-name">Rucksack</p>
+        <p class="item-weight">15 lbs</p>
+      </div>
+      <div class="catalog-item" data-weight="0" data-delay="1100">
+        <p class="item-name">Letters from home</p>
+        <p class="item-weight">-</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THE TOTAL ===== -->
+  <section class="act-1 weight-total" id="weight-total">
+    <p class="counter-label">Minimum combat load</p>
+    <p class="counter-number" id="total-counter">0</p>
+    <p class="counter-unit">pounds</p>
+    <p class="counter-context">Before a single step into the jungle.</p>
+  </section>
+
+  <!-- ===== THE TURN ===== -->
+  <section class="turn-section">
+    <p class="turn-text">
+      But that's not all they carried.<br><br>
+      They carried all the emotional baggage of men who might die.
+    </p>
+  </section>
+
+  <!-- ===== EMOTIONAL CATALOG ===== -->
+  <section class="act-2 emotional-catalog">
+    <div class="emotional-grid">
+      <span class="emotional-item" data-delay="0">Grief</span>
+      <span class="emotional-item" data-delay="150">Terror</span>
+      <span class="emotional-item" data-delay="300">Love</span>
+      <span class="emotional-item" data-delay="450">Longing</span>
+      <span class="emotional-item" data-delay="600">Shameful memories</span>
+      <span class="emotional-item" data-delay="750">Cowardice</span>
+      <span class="emotional-item" data-delay="900">Guilt</span>
+    </div>
+  </section>
+
+  <!-- ===== TED LAVENDER ===== -->
+  <section class="act-2 narrative-section">
+    <p class="narrative-text">
+      Ted Lavender was shot in the head on his way back from peeing.<br><br>
+      He was carrying <em>tranquilizers</em>, <em>six or seven ounces of dope</em>, and <em>the unweighed fear</em>.<br><br>
+      Lieutenant Jimmy Cross blamed himself. He had been distracted, thinking about a girl named Martha.
+    </p>
+  </section>
+
+  <!-- ===== STAT: GUILT ===== -->
+  <section class="act-2 stat-section">
+    <p class="stat-number">Guilt</p>
+    <p class="stat-context">
+      is a primary predictor of suicidal ideation among combat veterans with PTSD.
+    </p>
+    <p class="stat-source">American Journal of Psychiatry</p>
+  </section>
+
+  <!-- ===== QUOTE ===== -->
+  <section class="act-2 quote-section">
+    <p class="quote-text">
+      "They carried the soldier's greatest fear, which was the fear of blushing. Men killed, and died, because they were embarrassed not to."
+    </p>
+    <p class="quote-attribution">- Tim O'Brien</p>
+  </section>
+
+  <!-- ===== STAT: PTSD ===== -->
+  <section class="act-3 stat-section">
+    <p class="stat-number">50 years</p>
+    <p class="stat-context">
+      later, Vietnam veterans still show significantly elevated rates of PTSD compared to civilians.
+    </p>
+    <p class="stat-source">VA Research, 2022</p>
+  </section>
+
+  <!-- ===== STAT: SUICIDE ===== -->
+  <section class="act-3 stat-section">
+    <p class="stat-number">2×</p>
+    <p class="stat-context">
+      The veteran suicide rate is more than double that of non-veteran adults.<br><br>
+      34.7 per 100,000 vs. 17.1 per 100,000.
+    </p>
+    <p class="stat-source">VA National Report, 2022</p>
+  </section>
+
+  <!-- ===== CLOSE ===== -->
+  <div style="height: 10vh; background-color: #111;"></div>
+  <section class="act-3 close-section" id="close-section">
+    <p class="close-text">
+      "A true war story is never about war. It's about sunlight. It's about the special way that dawn spreads out on a river when you know you must cross the river and march into the mountains and do things you are afraid to do."
+      <span class="final-line">Stories are for joining the past to the future.</span>
+    </p>
+  </section>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ===== ELEMENTS =====
+    const stickyCounter = document.getElementById('sticky-counter');
+    const runningWeight = document.getElementById('running-weight');
+    const counterLabel = document.getElementById('counter-label');
+    const totalCounter = document.getElementById('total-counter');
+    const catalogSection = document.getElementById('catalog-section');
+    const weightTotalSection = document.getElementById('weight-total');
+    const catalogItems = document.querySelectorAll('.catalog-item');
+    const emotionalItems = document.querySelectorAll('.emotional-item');
+    const turnSection = document.querySelector('.turn-section');
+    const closeSection = document.getElementById('close-section');
+    const closeText = document.querySelector('.close-text');
+    
+    // Core state
+    let currentDisplayedWeight = 0;
+    let targetWeight = 0;
+    let isGlitching = false;
+    let glitchInterval;
+    let isTimeMode = false;
+    
+    // ===== ANIMATION LOOP =====
+    function render() {
+        if (isTimeMode) {
+             // Time calculation is handled in scroll listener
+        } else if (!isGlitching) {
+            // Smoothly interpolate (Lerp) current to target
+            const diff = targetWeight - currentDisplayedWeight;
+            
+            if (Math.abs(diff) > 0.05) {
+                currentDisplayedWeight += diff * 0.1; 
+                runningWeight.textContent = Math.round(currentDisplayedWeight * 10) / 10;
+                
+                // Color indications
+                if (diff > 0.5) {
+                    runningWeight.classList.add('adding');
+                    runningWeight.classList.remove('subtracting');
+                } else if (diff < -0.5) {
+                    runningWeight.classList.add('subtracting');
+                    runningWeight.classList.remove('adding');
+                } else {
+                    runningWeight.classList.remove('adding', 'subtracting');
+                }
+            } else {
+                currentDisplayedWeight = targetWeight;
+                runningWeight.textContent = Math.round(currentDisplayedWeight * 10) / 10;
+                runningWeight.classList.remove('adding', 'subtracting');
+            }
+        }
+        requestAnimationFrame(render);
+    }
+    
+    // Start the loop
+    render();
+
+    // ===== SCROLL LOGIC =====
+    window.addEventListener('scroll', () => {
+        // 1. Time Shift Logic (The Ending)
+        const closeRect = closeSection.getBoundingClientRect();
+        const startOfTime = window.innerHeight; // When section hits bottom of screen? No, top.
+        
+        // Check if we have entered the close section
+        if (closeRect.top < window.innerHeight) {
+            isTimeMode = true;
+            stopGlitch(); // Stop any previous glitches
+            
+            // Calculate progress through the section (0 to 1)
+            // We want it to start counting when the section hits the middle of screen
+            // And finish when we reach the bottom
+            const scrollableDistance = closeSection.offsetHeight - window.innerHeight;
+            const scrolled = Math.max(0, -closeRect.top); // pixels scrolled into section
+            let progress = scrolled / scrollableDistance;
+            progress = Math.min(Math.max(progress, 0), 1); // Clamp 0-1
+            
+            // Map progress to Years
+            const startYear = 1969;
+            const endYear = 2025;
+            const yearRange = endYear - startYear;
+            const currentYear = Math.floor(startYear + (progress * yearRange));
+            
+            // UI Updates
+            stickyCounter.classList.add('visible', 'year-mode');
+            counterLabel.textContent = "Still Carrying";
+            runningWeight.classList.remove('glitch', 'adding', 'subtracting');
+            runningWeight.textContent = currentYear;
+            
+            // Text fade in
+            if (progress > 0.8) {
+                closeText.classList.add('visible');
+            } else {
+                closeText.classList.remove('visible');
+            }
+            
+        } else {
+            // WE ARE NOT IN THE TIME SECTION
+            // Revert state if we just scrolled out
+            if (isTimeMode) {
+                isTimeMode = false;
+                stickyCounter.classList.remove('year-mode');
+                counterLabel.textContent = "Carrying";
+                runningWeight.textContent = Math.round(currentDisplayedWeight * 10) / 10;
+            }
+
+            // 2. Normal Catalog Logic
+            let newTarget = 0;
+            const triggerLine = window.innerHeight * 0.75; 
+            
+            catalogItems.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                if (rect.top < triggerLine) {
+                    newTarget += parseFloat(item.dataset.weight) || 0;
+                    item.classList.add('counted');
+                } else {
+                    item.classList.remove('counted');
+                }
+            });
+            targetWeight = newTarget;
+
+            // 3. Glitch Logic (Mid-section)
+            const turnRect = turnSection.getBoundingClientRect();
+            // If in Turn section AND above close section
+            if (turnRect.top < window.innerHeight / 2) {
+                if (!isGlitching) startGlitch();
+            } else {
+                if (isGlitching) stopGlitch();
+            }
+        }
+
+    }, { passive: true });
+    
+    // ===== GLITCH EFFECTS =====
+    function startGlitch() {
+        if (isGlitching) return;
+        isGlitching = true;
+        
+        const glitchWords = [currentDisplayedWeight.toFixed(1), "HEAVY", "BURDEN", "∞", "MEMORY", "GUILT", "fear"];
+        const numberElement = document.getElementById('running-weight');
+        numberElement.classList.add('glitch');
+        
+        let visualValue = currentDisplayedWeight;
+        
+        glitchInterval = setInterval(() => {
+            visualValue += Math.random() * 50;
+            if (Math.random() > 0.6) {
+                 numberElement.textContent = glitchWords[Math.floor(Math.random() * glitchWords.length)];
+            } else {
+                 numberElement.textContent = Math.floor(visualValue);
+            }
+        }, 80);
+    }
+    
+    function stopGlitch() {
+        isGlitching = false;
+        clearInterval(glitchInterval);
+        const numberElement = document.getElementById('running-weight');
+        numberElement.classList.remove('glitch');
+    }
+    
+    // ===== INTERSECTION OBSERVERS (For Fade-ins Only) =====
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, delay);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    catalogItems.forEach(item => fadeObserver.observe(item));
+    emotionalItems.forEach(item => fadeObserver.observe(item));
+    
+    // Sticky Counter Visibility
+    const showCounterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isTimeMode) {
+                stickyCounter.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+    showCounterObserver.observe(catalogSection);
+    
+    // Hide when seeing Total (Act 1 end), but re-show if scrolled past
+    const totalObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !isTimeMode) {
+          stickyCounter.classList.remove('visible');
+          animateTotalCounter();
+        } else if (entry.boundingClientRect.top < 0 && !isTimeMode) {
+           stickyCounter.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.5 });
+    totalObserver.observe(weightTotalSection);
+    
+    // Dark Mode Switch
+    const darkObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          stickyCounter.classList.add('dark');
+        } else {
+           if (entry.boundingClientRect.top > 0) {
+               stickyCounter.classList.remove('dark');
+           }
+        }
+      });
+    }, { threshold: 0.1 });
+    darkObserver.observe(turnSection);
+    
+    // ===== TOTAL COUNTER ANIMATION =====
+    let totalAnimated = false;
+    function animateTotalCounter() {
+      if (totalAnimated) return;
+      totalAnimated = true;
+      
+      const endValue = 68;
+      const duration = 2000;
+      const startTime = performance.now();
+      
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        
+        totalCounter.textContent = Math.round(endValue * easeOut);
+        
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        }
+      }
+      requestAnimationFrame(update);
+    }
+    
+    // ===== HIDE SCROLL INDICATOR =====
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        scrollIndicator.style.opacity = '0';
+        scrollIndicator.style.transition = 'opacity 0.5s ease';
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
