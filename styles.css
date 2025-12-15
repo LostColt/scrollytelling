@@ -1,236 +1,283 @@
-/* --- 1. Color and Global Reset --- */
 :root {
-    --color-dark: #0f0f0f;
-    --color-off-white: #e8e4df;
-    --color-accent-gold: #c9a227;
-    --color-muted: rgba(232, 228, 223, 0.6);
-    --color-rule: rgba(232, 228, 223, 0.2); /* 20% opacity for separators */
-    --padding-v: 15vh;
+    --primary-color: #1a1a1a; /* Dark background */
+    --secondary-color: #f0f0f0; /* Light text */
+    --accent-color: #E6B34A; /* Cinematic Gold/Amber accent */
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'Inter', sans-serif;
 }
 
-/* Background Grain Texture for Filmic Depth */
-body {
-    background-color: var(--color-dark);
-    /* Placeholder for subtle grain texture. In production, use a base64 encoded image or a small, repeating PNG/SVG here. */
-    /* Example: background: var(--color-dark) url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=') repeat; */
-    color: var(--color-off-white);
-    font-family: 'Inter', sans-serif;
+/* Base Reset & Typography */
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    line-height: 1.6;
+    scroll-behavior: smooth; 
+}
+
+/* General Layout */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.section {
+    padding: 100px 0;
+    min-height: 100vh;
+}
+
+/* Headings & Typography Hierarchy */
+h1 {
+    font-family: var(--font-heading);
+    font-size: 5em;
+    letter-spacing: 0.15em;
+    color: var(--accent-color);
+}
+
+h2 {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: var(--secondary-color);
+}
+
+h3 {
+    font-family: var(--font-heading);
+    font-size: 3em;
+    letter-spacing: 0.1em;
+    margin-bottom: 50px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-title-accent {
+    color: var(--accent-color);
+    font-size: 0.8em;
+    margin-right: 15px;
+}
+
+/* Hero Section */
+#hero-section {
     min-height: 100vh;
     display: flex;
-    font-weight: 400; /* Minimum weight set to 400 */
-}
-
-/* Accent Class for Name, CTA, and other Gold elements */
-.accent-text {
-    color: var(--color-accent-gold);
-}
-
-/* --- 2. Typography & Hierarchy --- */
-h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
-    text-transform: uppercase;
-    font-weight: 700;
-    line-height: 1.2;
-}
-
-/* Applicant Name: Largest Element (4rem, tracked out) */
-.name-header {
-    font-size: 4rem;
-    letter-spacing: 0.2em;
-    margin-bottom: 0.5rem;
-}
-
-/* Section Headings: 2rem, Generous spacing */
-.section-heading {
-    font-size: 2rem;
-    letter-spacing: 0.05em;
-    margin-top: 0;
-    margin-bottom: 2.5rem;
-}
-
-/* Body Text and Details */
-p, li {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-/* Muted Text for Dates and Secondary Info */
-.muted-text {
-    color: var(--color-muted);
-    font-size: 0.9rem;
-}
-
-/* Small Caps for Contact Labels */
-.label {
-    font-weight: 500;
-    font-variant: small-caps;
-    margin-right: 0.5rem;
-    color: var(--color-muted);
-}
-
-
-/* --- 3. Layout: Vertical Scroll as Narrative --- */
-.sidebar-anchor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 25vw;
-    height: 100vh;
-    padding: 5vh 2vw;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: var(--color-dark); /* Ensure sidebar covers content behind it */
-    z-index: 10;
-}
-
-.content-scroll {
-    width: 75vw;
-    margin-left: 25vw; /* Offset to make room for the fixed sidebar */
-    padding-left: 5vw;
-    padding-right: 5vw;
-    box-sizing: border-box;
-    overflow-y: auto;
-}
-
-/* Each Section is a Full "Scene" */
-.scroll-section {
-    padding-top: var(--padding-v);
-    padding-bottom: var(--padding-v);
-    border-bottom: 1px solid var(--color-rule); /* Optional: Soft rule between sections */
-}
-.scroll-section:last-child {
-    border-bottom: none;
-}
-
-/* Section Punctuation: Thin horizontal rule above heading */
-.section-rule {
-    border: none;
-    border-top: 1px solid var(--color-rule);
-    width: 100%;
-    margin-bottom: 3rem;
-    opacity: 1; /* Already handled by color opacity */
-}
-
-
-/* Expertise Stacking */
-.expertise-pillar {
-    margin-bottom: 2.5rem;
-}
-.pillar-title {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-}
-.pillar-separator {
-    border: none;
-    border-top: 1px solid var(--color-rule);
-    width: 100%;
-    margin: 2rem 0;
-}
-.expertise-pillar:last-of-type {
-    margin-bottom: 0;
-}
-.expertise-pillar:last-of-type + .pillar-separator {
-    display: none;
-}
-
-
-/* Timeline (Experience/Education) Styling */
-.timeline-entry {
-    margin-bottom: 4rem;
-    padding-left: 0; /* Remove default indentation */
-}
-.timeline-entry:last-child {
-    margin-bottom: 0;
-}
-/* Use only whitespace and indentation */
-.role-title-line {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 0.25rem;
-}
-.role-title {
-    font-family: 'Inter', sans-serif;
-    text-transform: none;
-    font-weight: 500;
-    font-size: 1.2rem;
-    margin: 0;
-}
-.company-name {
-    margin: 0 0 1rem 0;
-    font-style: italic;
-    color: var(--color-muted);
-}
-.role-date {
-    /* Right-aligned is handled by flexbox */
-    white-space: nowrap;
-}
-.role-details {
-    list-style: none; /* Remove list markers entirely */
-    padding-left: 1.5rem; /* Subtle indentation */
-    margin-top: 0.5rem;
-}
-.role-details li {
-    margin-bottom: 0.75rem; /* Line spacing replaces markers */
-}
-
-
-/* Contact Section in Sidebar */
-.contact-section {
-    padding-top: 2rem;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 }
-.contact-label {
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
+
+.contact-info {
+    font-size: 1.1em;
+    font-weight: 300;
+    opacity: 0.7;
+    margin-top: 20px;
 }
-.contact-details p {
-    font-size: 0.95rem;
-    margin: 0.5rem 0;
+
+/* Summary Section */
+.summary-text {
+    font-size: 1.4em;
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
 }
-.contact-details .label {
-    display: none; /* Keep label in code for accessibility, but center layout often omits it visually */
+
+/* Skills Grid */
+#skills .skills-grid,
+#education .education-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    padding-top: 20px;
+    text-align: left;
+}
+
+.skill-category,
+.education-item {
+    flex: 1;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 5px;
+    border-top: 3px solid var(--accent-color);
+}
+
+.skill-category h4,
+.education-item h4 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.skill-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.skill-category li {
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    font-size: 0.95em;
+}
+
+/* Education and Awards Sections */
+.edu-institution {
+    font-style: italic;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+.edu-detail {
+    font-size: 0.9em;
+    color: var(--accent-color);
+    margin-top: 5px;
+}
+
+#awards .awards-list h4 {
+    font-family: var(--font-heading);
+    font-size: 1.8em;
+    letter-spacing: 0.05em;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+}
+
+#awards .awards-list ul {
+    list-style-type: '★ ';
+    padding-left: 20px;
+}
+#awards .awards-list li {
+    margin-bottom: 10px;
 }
 
 
-/* --- 4. Motion & CTA --- */
-
-/* Initial hidden state for scroll-triggered fade-in */
-.section-hidden {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-/* Visible state */
-.section-visible {
-    opacity: 1;
-    transform: translateY(0);
+/* --- CINEMATIC TIMELINE STYLING --- */
+.timeline-section {
+    position: relative;
+    padding-top: 50px; 
 }
 
-/* CTA Button Styling */
-.cta-button {
-    display: inline-block;
-    padding: 0.75rem 2rem;
-    margin-top: 4rem;
-    background-color: var(--color-accent-gold);
-    color: var(--color-dark); /* Invert color scheme on default */
-    border: 1px solid var(--color-accent-gold);
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-    transition: background-color 0.3s, color 0.3s;
+.timeline-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
 }
 
-/* CTA Hover: Color Invert (No Movement) */
-.cta-button:hover {
-    background-color: var(--color-dark);
-    color: var(--color-accent-gold);
+/* The vertical line for the timeline */
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+    position: relative;
+    /* Opacity and Transform handled by GSAP */
+    transition: box-shadow 0.3s ease; 
+}
+
+/* Alternating layout for timeline */
+.timeline-item:nth-child(odd) {
+    flex-direction: row-reverse;
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    text-align: right;
+    padding-right: 50px;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    text-align: left;
+    padding-left: 50px;
+}
+
+.timeline-date {
+    font-family: var(--font-heading);
+    font-size: 1.5em;
+    letter-spacing: 0.08em;
+    color: var(--accent-color);
+    width: 20%;
+    text-align: center;
+    flex-shrink: 0; 
+    z-index: 10;
+    position: relative; 
+}
+
+/* The date-dot on the line */
+.timeline-date::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    z-index: 11;
+}
+
+/* Positioning the dot */
+.timeline-item:nth-child(even) .timeline-date::after {
+    right: -6px;
+}
+
+.timeline-item:nth-child(odd) .timeline-date::after {
+    left: -6px;
+}
+
+.timeline-content {
+    width: 40%;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 2px solid var(--accent-color);
+    flex-grow: 1; 
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    border-left: none;
+    border-right: 2px solid var(--accent-color);
+}
+
+.timeline-content h4 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: var(--secondary-color);
+}
+
+.job-location {
+    font-weight: 300;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+.timeline-content ul {
+    list-style-type: '— ';
+    padding-left: 20px;
+}
+
+/* Class added by JavaScript when element is active in the center of the viewport */
+.timeline-item.active {
+    box-shadow: 0 0 40px rgba(230, 179, 74, 0.3); /* Cinematic glow */
+    z-index: 20;
 }
