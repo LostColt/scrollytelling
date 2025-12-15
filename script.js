@@ -27,9 +27,8 @@ const sections = document.querySelectorAll('#content-scroll-area section');
 function updateBackgroundColor() {
     const currentScroll = scrollArea.scrollTop;
     const viewportHeight = scrollArea.clientHeight;
-    // Set the point in the viewport that triggers the color transition
-    // Using 50% (the center) ensures the transition starts early and finishes mid-section
-    const activeThreshold = viewportHeight * 0.5;
+    // Transition starts when the section reaches 50% of the viewport height (activeThreshold)
+    const activeThreshold = viewportHeight * 0.5; 
 
     let activeSection = null;
 
@@ -41,12 +40,11 @@ function updateBackgroundColor() {
         if (currentScroll + activeThreshold >= sectionTop) {
             activeSection = section;
         } else {
-            // Optimization: since they are ordered, we can stop here.
             break; 
         }
     }
     
-    // 2. Calculate the color transition
+    // 2. Calculate the color transition factor (0.0 to 1.0)
     if (activeSection) {
         const startColorHex = activeSection.getAttribute('data-color-start');
         const endColorHex = activeSection.getAttribute('data-color-end');
@@ -54,12 +52,10 @@ function updateBackgroundColor() {
         const sectionTop = activeSection.offsetTop;
         const sectionHeight = activeSection.offsetHeight;
 
-        // Calculate how far the scroll point is into the section
-        // We use the scroll position relative to the section's start
+        // Calculate scroll progress relative to the section's start
         const scrollInSection = (currentScroll + activeThreshold) - sectionTop;
 
-        // Calculate a transition factor (0.0 to 1.0)
-        // The color transition should span the entire visible height of the section
+        // The factor determines how much to blend the start and end colors
         let factor = scrollInSection / sectionHeight;
         
         // Clamp factor between 0 and 1 for smooth mixing
@@ -70,7 +66,7 @@ function updateBackgroundColor() {
         
         const newColor = mixColors(startColor, endColor, factor);
         
-        // Apply the new color to the scroll area, CSS handles the smooth transition
+        // Apply the new color to the scroll area
         scrollArea.style.backgroundColor = newColor;
     }
 }
@@ -78,5 +74,5 @@ function updateBackgroundColor() {
 // Attach the function to the scroll event
 scrollArea.addEventListener('scroll', updateBackgroundColor);
 
-// Run once on load to set the initial color based on the first section
+// Run once on load to set the initial color
 document.addEventListener('DOMContentLoaded', updateBackgroundColor);
