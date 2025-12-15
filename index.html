@@ -3,17 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>David C. Tran - Cinematic Resume</title>
+    <title>David C. Tran - Writer & Educator</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary-color: #1a1a1a; /* Dark background */
-            --secondary-color: #f0f0f0; /* Light text */
-            --accent-color: #E6B34A; /* Cinematic Gold/Amber accent */
+            /* --- NEW PALETTE --- */
+            /* Backgrounds */
+            --bg-dark: #1E3A5F;      /* Deep slate blue */
+            --bg-cream: #FAF7F2;     /* Warm cream */
+            --bg-sage: #E8F0E8;      /* Soft sage green */
+            --bg-white: #FEFDFB;     /* Warm white */
+            --bg-gray: #F0EDEA;      /* Light warm gray */
+            
+            /* Text */
+            --text-dark: #2D3436;    /* Charcoal */
+            --text-light: #FAF7F2;   /* Warm white */
+            
+            /* Accent */
+            --accent: #C4785A;       /* Warm terracotta */
+            --accent-hover: #B06A4C;
+
+            /* Fonts */
             --font-heading: 'Bebas Neue', sans-serif;
             --font-body: 'Inter', sans-serif;
         }
@@ -27,8 +41,8 @@
 
         body {
             font-family: var(--font-body);
-            color: var(--secondary-color);
-            background-color: var(--primary-color);
+            color: var(--text-dark);
+            background-color: var(--bg-white);
             line-height: 1.6;
             scroll-behavior: smooth;
             overflow-x: hidden;
@@ -41,58 +55,27 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 40px;
             position: relative;
-            z-index: 2; /* Ensures content sits above background images */
+            z-index: 2;
         }
 
         .section {
-            padding: 100px 0;
+            padding: 120px 0; /* Increased padding to accommodate gradient headers */
             min-height: 100vh;
             position: relative;
-            overflow: hidden; /* Keeps background images contained */
-        }
-
-        /* Background Image Utility */
-        .bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 0;
-        }
-
-        /* Dark Overlay Utility */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 10, 0.85); /* Heavy dark overlay for readability */
-            z-index: 1;
-        }
-        
-        /* Lighter overlay for footer/hero where image should be more visible */
-        .overlay-light {
-            background: rgba(10, 10, 10, 0.75); 
         }
 
         /* Headings & Typography */
         h1 {
             font-family: var(--font-heading);
-            font-size: clamp(3em, 8vw, 6em); /* Responsive font size */
-            letter-spacing: 0.1em;
-            color: var(--accent-color);
+            font-size: clamp(3.5em, 8vw, 6em);
+            letter-spacing: 0.05em;
+            color: var(--text-light); /* Default for hero */
             line-height: 1;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
         h2 {
@@ -100,74 +83,118 @@
             font-weight: 300;
             font-size: clamp(1.2em, 3vw, 1.8em);
             margin-bottom: 30px;
-            color: var(--secondary-color);
+            color: var(--text-light); /* Default for hero */
+            opacity: 0.9;
         }
 
         h3 {
             font-family: var(--font-heading);
-            font-size: 3em;
-            letter-spacing: 0.1em;
-            margin-bottom: 50px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 3.5em;
+            letter-spacing: 0.05em;
+            margin-bottom: 60px;
+            color: var(--text-dark); /* Default for body sections */
         }
 
         .section-title-accent {
-            color: var(--accent-color);
-            font-size: 0.8em;
+            color: var(--accent);
+            font-size: 0.6em;
             margin-right: 15px;
+            vertical-align: middle;
         }
 
         strong {
-            color: var(--accent-color);
-            font-weight: 600;
+            color: var(--accent);
+            font-weight: 700;
         }
-
-        /* --- HERO SECTION --- */
+        
+        /* Utility for Dark Sections (Awards/Hero) */
+        .dark-section h3, 
+        .dark-section p, 
+        .dark-section li,
+        .dark-section h4 {
+            color: var(--text-light);
+        }
+        
+        /* --- SECTION BACKGROUNDS & GRADIENTS --- */
+        
+        /* 1. Hero: Deep Slate Blue */
         #hero-section {
-            min-height: 100vh;
+            background-color: var(--bg-dark);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
         }
-        
-        .hero-contact {
-            font-size: 1.1em;
-            letter-spacing: 1px;
-            opacity: 0.8;
-            margin-top: 20px;
-        }
 
-        /* --- SUMMARY SECTION --- */
+        /* 2. Summary: Transition Blue -> Cream */
         #summary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(to bottom, 
+                var(--bg-dark) 0%, 
+                var(--bg-cream) 15%, 
+                var(--bg-cream) 100%);
         }
 
+        /* 3. Skills: Transition Cream -> Sage */
+        #skills {
+            background: linear-gradient(to bottom, 
+                var(--bg-cream) 0%, 
+                var(--bg-sage) 15%, 
+                var(--bg-sage) 100%);
+        }
+
+        /* 4. Experience: Transition Sage -> White */
+        #experience {
+            background: linear-gradient(to bottom, 
+                var(--bg-sage) 0%, 
+                var(--bg-white) 15%, 
+                var(--bg-white) 100%);
+        }
+
+        /* 5. Education: Transition White -> Gray */
+        #education {
+            background: linear-gradient(to bottom, 
+                var(--bg-white) 0%, 
+                var(--bg-gray) 15%, 
+                var(--bg-gray) 100%);
+        }
+        
+        /* 6. Awards: Transition Gray -> Dark (Bookend) */
+        #awards {
+            background: linear-gradient(to bottom, 
+                var(--bg-gray) 0%, 
+                var(--bg-dark) 15%, 
+                var(--bg-dark) 100%);
+        }
+        
+        /* 7. Footer: Transition Dark -> Cream */
+        footer {
+            background: linear-gradient(to bottom, 
+                var(--bg-dark) 0%, 
+                var(--bg-cream) 15%, 
+                var(--bg-cream) 100%);
+            color: var(--text-dark);
+            padding: 100px 0 50px 0;
+            text-align: center;
+        }
+
+        /* --- COMPONENT STYLES --- */
+
+        /* Summary Box */
         .summary-text {
             font-size: 1.5em;
-            font-weight: 300;
+            font-weight: 400;
             line-height: 1.8;
             max-width: 900px;
             margin: 0 auto;
             text-align: center;
-            /* Anchoring Treatment */
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px;
-            border-left: 4px solid var(--accent-color);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            color: var(--text-dark);
         }
 
-        /* --- SKILLS & EDUCATION GRID --- */
+        /* Cards (Skills/Education) */
         .skills-grid, .education-grid {
             display: flex;
             justify-content: space-between;
             gap: 30px;
-            padding-top: 20px;
-            text-align: left;
             flex-wrap: wrap; 
         }
 
@@ -175,85 +202,84 @@
         .education-item {
             flex: 1;
             min-width: 280px;
-            padding: 25px;
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            border-radius: 4px;
-            border-top: 2px solid var(--accent-color);
+            padding: 30px;
+            background: #FFFFFF; /* Crisp white card on colored backgrounds */
+            border-radius: 8px;
+            border-top: 4px solid var(--accent);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* Soft shadow */
             margin-bottom: 20px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .skill-category:hover, .education-item:hover {
             transform: translateY(-5px);
-            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .skill-category h4,
         .education-item h4 {
             font-family: var(--font-body);
             font-weight: 700;
-            font-size: 1.3em;
+            font-size: 1.25em;
             margin-bottom: 15px;
-            color: var(--accent-color);
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .skill-category ul {
             list-style: none;
-            padding: 0;
         }
 
         .skill-category li {
             padding: 8px 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--bg-sage);
             font-size: 0.95em;
+            color: var(--text-dark);
         }
 
-        /* Education specifics */
         .edu-institution {
             font-style: italic;
-            opacity: 0.8;
+            color: #555;
             margin-bottom: 5px;
+            font-weight: 500;
         }
-        .edu-detail {
-            font-size: 0.9em;
-            color: var(--accent-color);
-            margin-top: 5px;
-        }
-
-        /* --- AWARDS SECTION --- */
+        
+        /* Awards List */
         #awards .awards-list h4 {
             font-family: var(--font-heading);
-            font-size: 1.8em;
+            font-size: 2em;
             letter-spacing: 0.05em;
             margin-top: 40px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 5px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            color: var(--text-light);
         }
 
         #awards .awards-list ul {
-            list-style-type: none;
-            padding-left: 0;
+            list-style: none;
         }
+        
         #awards .awards-list li {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             padding-left: 25px;
             position: relative;
             font-size: 1.1em;
             font-weight: 300;
         }
+        
         #awards .awards-list li::before {
             content: '★';
-            color: var(--accent-color);
+            color: var(--accent);
             position: absolute;
             left: 0;
             top: 2px;
         }
 
-        /* --- CINEMATIC TIMELINE STYLING --- */
+        /* --- UPDATED TIMELINE STYLING (Light Theme) --- */
         .timeline-section {
-            position: relative;
-            padding-top: 50px; 
+            padding-top: 80px; 
         }
 
         .timeline-container {
@@ -263,14 +289,15 @@
             position: relative;
         }
 
+        /* The vertical line */
         .timeline-container::before {
             content: '';
             position: absolute;
             left: 50%;
             top: 0;
             bottom: 0;
-            width: 2px;
-            background-color: rgba(255, 255, 255, 0.1);
+            width: 3px;
+            background-color: var(--bg-sage); /* Subtle line */
             transform: translateX(-50%);
         }
 
@@ -279,7 +306,6 @@
             justify-content: space-between;
             margin: 60px 0;
             position: relative;
-            transition: box-shadow 0.3s ease; 
         }
 
         .timeline-item:nth-child(odd) {
@@ -299,66 +325,67 @@
         .timeline-date {
             font-family: var(--font-heading);
             font-size: 1.8em;
-            letter-spacing: 0.08em;
-            color: var(--accent-color);
+            color: var(--accent);
             width: 15%;
             text-align: center;
             flex-shrink: 0; 
             z-index: 10;
             position: relative; 
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
 
+        /* The dot */
         .timeline-date::after {
             content: '';
             position: absolute;
             top: 50%;
-            width: 14px;
-            height: 14px;
-            background-color: var(--accent-color);
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent); /* Terracotta dot */
+            border: 3px solid var(--bg-white); /* White ring for contrast */
             border-radius: 50%;
             transform: translateY(-50%);
             z-index: 11;
-            box-shadow: 0 0 10px var(--accent-color);
+            box-shadow: 0 0 0 2px var(--bg-sage); /* Outer ring */
         }
 
         .timeline-item:nth-child(even) .timeline-date::after {
-            right: -7px;
+            right: -8px;
         }
 
         .timeline-item:nth-child(odd) .timeline-date::after {
-            left: -7px;
+            left: -8px;
         }
 
         .timeline-content {
             width: 42%;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--accent-color);
+            background: #FFFFFF; /* White card */
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* Subtle shadow initially */
             flex-grow: 1; 
-            border-radius: 0 5px 5px 0;
+            border-left: 4px solid var(--accent);
         }
 
         .timeline-item:nth-child(odd) .timeline-content {
             border-left: none;
-            border-right: 3px solid var(--accent-color);
-            border-radius: 5px 0 0 5px;
+            border-right: 4px solid var(--accent);
         }
 
         .timeline-content h4 {
             font-family: var(--font-body);
-            font-weight: 600;
-            font-size: 1.4em;
+            font-weight: 700;
+            font-size: 1.3em;
             margin-bottom: 5px;
-            color: var(--secondary-color);
+            color: var(--text-dark);
         }
 
         .job-location {
-            font-weight: 300;
-            font-size: 1em;
+            font-weight: 500;
+            font-size: 0.95em;
             margin-bottom: 15px;
-            opacity: 0.7;
-            font-style: italic;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .timeline-content ul {
@@ -370,64 +397,58 @@
             position: relative;
             padding-left: 20px;
             margin-bottom: 10px;
+            color: var(--text-dark);
         }
 
         .timeline-content li::before {
             content: '—';
             position: absolute;
             left: 0;
-            color: var(--accent-color);
+            color: var(--accent);
+            font-weight: bold;
         }
 
-        .timeline-item.active {
-            box-shadow: 0 0 50px rgba(230, 179, 74, 0.15);
-            z-index: 20;
+        /* Active State (Zoomed) */
+        .timeline-item.active .timeline-content {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); /* Deeper shadow on active */
         }
 
         /* --- FOOTER --- */
-        footer {
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 50px 20px;
-        }
-
-        .footer-content {
-            position: relative;
-            z-index: 2;
-        }
-
         .footer-title {
             font-family: var(--font-heading);
-            font-size: 5em;
-            color: var(--accent-color);
+            font-size: 4em;
+            color: var(--accent);
             margin-bottom: 20px;
         }
 
         .footer-contact p {
-            font-size: 1.5em;
+            font-size: 1.4em;
             margin: 10px 0;
+            font-weight: 500;
         }
 
         .footer-contact a {
-            color: var(--secondary-color);
+            color: var(--text-dark);
             text-decoration: none;
-            border-bottom: 1px solid var(--accent-color);
+            border-bottom: 2px solid var(--accent);
             transition: color 0.3s;
         }
 
         .footer-contact a:hover {
-            color: var(--accent-color);
+            color: var(--accent);
         }
 
         .copyright {
-            margin-top: 80px;
+            margin-top: 60px;
             font-size: 0.9em;
-            opacity: 0.5;
+            color: #666;
+        }
+
+        .hero-contact {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: var(--text-light);
+            opacity: 0.8;
         }
         
         /* Mobile Responsiveness */
@@ -435,25 +456,21 @@
             .timeline-container::before { left: 20px; }
             .timeline-item, .timeline-item:nth-child(odd) { flex-direction: column; align-items: flex-start; margin: 40px 0; }
             .timeline-date { width: auto; text-align: left; margin-bottom: 15px; margin-left: 45px; font-size: 1.5em; }
-            .timeline-content, .timeline-item:nth-child(odd) .timeline-content { width: 100%; text-align: left; padding: 25px; border: none; border-left: 3px solid var(--accent-color); border-radius: 0 5px 5px 0; }
-            .timeline-date::after { left: 14px !important; right: auto !important; }
+            .timeline-content, .timeline-item:nth-child(odd) .timeline-content { width: 100%; text-align: left; padding: 25px; border: none; border-left: 4px solid var(--accent); }
+            .timeline-date::after { left: 13px !important; right: auto !important; }
             
             h1 { font-size: 3.5em; }
-            h3 { font-size: 2.2em; }
-            .summary-text { font-size: 1.1em; padding: 25px; }
-            .footer-title { font-size: 3.5em; }
+            h3 { font-size: 2.5em; margin-bottom: 40px;}
+            .section { padding: 80px 0; }
         }
     </style>
 </head>
 <body>
 
     <header id="hero-section" class="section">
-        <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop');"></div>
-        <div class="overlay overlay-light"></div>
-        
         <div class="container hero-content">
             <h1>DAVID C. TRAN</h1>
-            <h2>Writing Coach, Curriculum Designer, & AI Integration Specialist</h2>
+            <h2>Writer, Educator & Curriculum Strategist</h2>
             <p class="hero-contact">
                 trandavidc@gmail.com | Miami, FL
             </p>
@@ -462,9 +479,6 @@
 
     <main>
         <section id="summary" class="section">
-            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=2573&auto=format&fit=crop');"></div>
-            <div class="overlay"></div>
-
             <div class="container">
                 <h3><span class="section-title-accent">01.</span> Professional Summary</h3>
                 <div class="summary-text">
@@ -517,7 +531,7 @@
                 
                 <div class="timeline-container">
                     <article class="timeline-item">
-                        <div class="timeline-date">AUG 2025 – PRESENT</div>
+                        <div class="timeline-date">2025 – Pres.</div>
                         <div class="timeline-content">
                             <h4>College Essay Writing Coach</h4>
                             <p class="job-location">Gulliver Preparatory School, Pinecrest, FL</p>
@@ -531,9 +545,9 @@
                     </article>
                     
                     <article class="timeline-item">
-                        <div class="timeline-date">JAN 2021 – DEC 2024</div>
+                        <div class="timeline-date">2021 – 2024</div>
                         <div class="timeline-content">
-                            <h4>English Composition Teacher & American Literature Teacher</h4>
+                            <h4>English Composition & Lit Teacher</h4>
                             <p class="job-location">IMG Academy, Bradenton, FL</p>
                             <ul>
                                 <li>Designed a writing-intensive curriculum emphasizing analytical essays and research papers for student-athletes, improving academic outcomes.</li>
@@ -545,9 +559,9 @@
                     </article>
                     
                     <article class="timeline-item">
-                        <div class="timeline-date">AUG 2017 – DEC 2020</div>
+                        <div class="timeline-date">2017 – 2020</div>
                         <div class="timeline-content">
-                            <h4>Director of Learning Lab & English Teacher</h4>
+                            <h4>Director of Learning Lab</h4>
                             <p class="job-location">Country Day School, Largo, FL</p>
                             <ul>
                                 <li>Directed the Learning Lab, overseeing learning specialists and academic interventions for students with diverse needs.</li>
@@ -559,9 +573,9 @@
                     </article>
                     
                     <article class="timeline-item">
-                        <div class="timeline-date">AUG 2013 – MAY 2017</div>
+                        <div class="timeline-date">2013 – 2017</div>
                         <div class="timeline-content">
-                            <h4>University Instructor – Composition, Literature, and Creative Writing</h4>
+                            <h4>University Instructor</h4>
                             <p class="job-location">University of Mississippi, Oxford, MS</p>
                             <ul>
                                 <li>Taught senior-level Creative Writing, first-year Composition (analytical writing, research), and American/British literature courses.</li>
@@ -572,7 +586,7 @@
                     </article>
                     
                     <article class="timeline-item">
-                        <div class="timeline-date">AUG 2007 – JUNE 2012</div>
+                        <div class="timeline-date">2007 – 2012</div>
                         <div class="timeline-content">
                             <h4>Writing Teacher</h4>
                             <p class="job-location">Balboa School, San Diego, CA</p>
@@ -611,9 +625,9 @@
             </div>
         </section>
         
-        <section id="awards" class="section">
+        <section id="awards" class="section dark-section">
             <div class="container">
-                <h3><span class="section-title-accent">05.</span> Leadership, Publications & Awards</h3>
+                <h3><span class="section-title-accent">05.</span> Leadership & Awards</h3>
                 <div class="awards-list">
                     
                     <h4>Professional Development & Leadership</h4>
@@ -634,9 +648,6 @@
         </section>
 
         <footer id="contact">
-            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1472145246862-b24cf25c4a36?q=80&w=2071&auto=format&fit=crop');"></div>
-            <div class="overlay overlay-light"></div>
-
             <div class="container footer-content">
                 <h2 class="footer-title">LET'S CONNECT</h2>
                 <div class="footer-contact">
@@ -659,13 +670,13 @@
             
             gsap.registerPlugin(ScrollTrigger);
 
-            const timelineItems = document.querySelectorAll('.timeline-item');
-
             // --- CINEMATIC ZOOM EFFECT FOR TIMELINE ---
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
             timelineItems.forEach((item) => {
-                
-                // Set initial state
-                gsap.set(item, { scale: 0.85, opacity: 0.4 });
+                // Initial state - modified for light background visibility
+                // Higher initial opacity so it doesn't look washed out on white
+                gsap.set(item, { scale: 0.9, opacity: 0.5 });
 
                 ScrollTrigger.create({
                     trigger: item,
@@ -676,9 +687,9 @@
                     onUpdate: (self) => {
                         const progress = self.progress;
                         
-                        // Sine wave math for peek center effect
-                        let scaleValue = 0.85 + (0.15 * Math.sin(progress * Math.PI));
-                        let opacityValue = 0.4 + (0.6 * Math.sin(progress * Math.PI));
+                        // Sine wave math
+                        let scaleValue = 0.9 + (0.1 * Math.sin(progress * Math.PI));
+                        let opacityValue = 0.5 + (0.5 * Math.sin(progress * Math.PI));
 
                         gsap.set(item, {
                             scale: scaleValue,
@@ -699,11 +710,11 @@
             document.querySelectorAll('section:not(#hero-section):not(.timeline-section)').forEach(section => {
                 gsap.from(section.querySelector('.container'), {
                     opacity: 0,
-                    y: 50,
+                    y: 40,
                     duration: 1,
                     scrollTrigger: {
                         trigger: section,
-                        start: "top 85%",
+                        start: "top 80%",
                         toggleActions: "play none none none"
                     }
                 });
@@ -716,12 +727,11 @@
                 duration: 1.5,
                 scrollTrigger: {
                     trigger: "footer",
-                    start: "top 75%",
+                    start: "top 85%",
                     toggleActions: "play none none none"
                 }
             });
             
-            // Refresh to ensure positions are calculated after images load
             ScrollTrigger.refresh();
         });
     </script>
