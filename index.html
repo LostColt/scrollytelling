@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,29 +8,29 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* --- STYLE: THE ATLANTIC (Navy, White, Royal Blue) --- */
+            /* --- STYLE: MIAMI MODERN PALETTE + ATLANTIC TYPE --- */
             
             /* Backgrounds */
-            --bg-hero: #0F172A;      /* Deepest Navy (almost black) */
-            --bg-white: #FFFFFF;     /* Pure Crisp White */
-            --bg-subtle: #F1F5F9;    /* Very Cool Light Gray (Mist) */
-            --bg-dark: #1E293B;      /* Slate Blue for dark sections */
+            --bg-ocean-deep: #0D3B4C; /* Hero/Footer - Deep Teal */
+            --bg-sand-light: #F7F2E8; /* Main Body - Warm Off-White */
+            --bg-sand-warm: #EFE6D5;  /* Alt sections */
+            --bg-white: #FFFFFF;      /* Cards */
             
             /* Text */
-            --text-main: #334155;    /* Slate Gray for body */
-            --text-dark: #0F172A;    /* Deep Navy for headings */
-            --text-light: #F8FAFC;   /* Off-white for dark backgrounds */
+            --text-dark: #082633;     /* Deepest Teal Charcoal */
+            --text-light: #FDFCF8;    /* Warm Cream */
+            --text-muted: #4A6370;    /* Muted Teal Gray */
             
             /* Accent */
-            --accent: #2563EB;       /* Royal Electric Blue */
-            --accent-soft: #DBEAFE;  /* Very light blue for backgrounds */
+            --accent-coral: #D76B56;  /* Burnt Coral/Terracotta */
+            --accent-teal: #2A8BA8;   /* Brighter teal highlights */
 
-            /* Fonts - Switched Heading to Oswald for a more "Journalism" feel */
-            --font-heading: 'Oswald', sans-serif; 
+            /* Fonts */
+            --font-heading: 'Oswald', sans-serif;
             --font-body: 'Inter', sans-serif;
         }
 
@@ -42,8 +43,8 @@
 
         body {
             font-family: var(--font-body);
-            color: var(--text-main);
-            background-color: var(--bg-white);
+            color: var(--text-dark);
+            background-color: var(--bg-sand-light);
             line-height: 1.7;
             scroll-behavior: smooth;
             overflow-x: hidden;
@@ -56,7 +57,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1100px; /* Slightly wider to accommodate 3 columns comfortably */
             margin: 0 auto;
             padding: 0 40px;
             position: relative;
@@ -64,8 +65,8 @@
         }
 
         .section {
-            padding: 120px 0;
-            min-height: 100vh;
+            padding: 100px 0;
+            min-height: auto; 
             position: relative;
         }
 
@@ -75,7 +76,7 @@
             font-size: clamp(4em, 9vw, 7em);
             text-transform: uppercase;
             font-weight: 700;
-            letter-spacing: -0.02em; /* Tighter tracking for modern look */
+            letter-spacing: -0.02em;
             color: var(--text-light);
             line-height: 0.9;
             margin-bottom: 25px;
@@ -83,9 +84,9 @@
 
         h2 {
             font-family: var(--font-body);
-            font-weight: 300;
+            font-weight: 400;
             font-size: clamp(1.2em, 2.5vw, 1.6em);
-            color: #94A3B8; /* Muted blue-gray */
+            color: var(--accent-teal);
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
@@ -94,72 +95,78 @@
             font-family: var(--font-heading);
             font-size: 3em;
             text-transform: uppercase;
+            font-weight: 500;
             color: var(--text-dark);
-            margin-bottom: 60px;
+            margin-bottom: 50px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
         
-        /* The decorative line next to headings */
         h3::after {
             content: '';
             display: block;
             height: 4px;
             width: 60px;
-            background: var(--accent);
+            background: var(--accent-coral);
         }
 
         .section-num {
-            font-family: var(--font-body);
+            font-family: var(--font-heading);
             font-weight: 700;
-            font-size: 0.4em;
-            color: var(--accent);
-            transform: translateY(-5px);
+            font-size: 0.6em;
+            color: var(--accent-teal);
+            transform: translateY(-4px);
         }
 
         strong {
-            color: var(--accent);
+            color: var(--accent-coral);
             font-weight: 600;
         }
 
-        /* --- MARGINALIA SYSTEM (Clean & Academic) --- */
-        .annotation-wrapper {
-            display: grid;
-            grid-template-columns: 1fr minmax(300px, 750px) 1fr;
-            gap: 50px;
-            align-items: start; /* Align to top looks cleaner here */
+        /* --- NARRATIVE BREAKS (The Quote System) --- */
+        .narrative-break {
+            margin-top: 80px;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #DED6C5;
+            border-bottom: 1px solid #DED6C5;
             position: relative;
-            margin-bottom: 60px;
         }
 
-        .side-note {
-            font-family: var(--font-body);
-            font-size: 0.85em;
+        .quote-text {
+            font-family: var(--font-heading);
+            font-size: 1.8em;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            line-height: 1.4;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .quote-highlight {
+            color: var(--accent-coral);
             font-weight: 500;
-            color: #64748B;
-            position: relative;
-            padding-top: 20px;
-            border-top: 2px solid var(--accent); /* Top border looks like a footnote */
-            max-width: 200px;
-            margin-top: 15px;
         }
 
-        .note-right { justify-self: start; text-align: left; }
-        .note-left { justify-self: end; text-align: right; }
-        .empty-col { display: none; }
-
-        /* --- SUMMARY CARD (The "Paper" Look) --- */
+        /* --- SUMMARY CARD --- */
         .summary-card {
             background-color: var(--bg-white);
-            padding: 0; /* Removed padding for a text-forward look */
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(13, 59, 76, 0.08);
+            border-radius: 4px;
             position: relative;
             z-index: 2;
+            text-align: left;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .summary-lead {
-            font-family: var(--font-heading); /* Switch to heading font for lead */
-            font-size: 2.2em;
+            font-family: var(--font-heading);
+            font-size: 2em;
             font-weight: 500;
             color: var(--text-dark);
             line-height: 1.3;
@@ -169,34 +176,31 @@
         
         .summary-body {
             font-size: 1.15em;
-            color: var(--text-main);
-            column-count: 2; /* Editorial two-column layout */
-            column-gap: 40px;
+            color: var(--text-dark);
+            opacity: 0.9;
         }
 
-        /* --- SKILLS STACK (Clean Technical List) --- */
+        /* --- SKILLS STACK --- */
         .skills-stack {
             display: flex;
             flex-direction: column;
-            gap: 0; /* No gap, connected border look */
-            max-width: 1000px;
+            width: 100%;
+            max-width: 900px;
             margin: 0 auto;
-            border-top: 1px solid #E2E8F0;
         }
 
         .skill-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr; 
-            gap: 60px;
-            border-bottom: 1px solid #E2E8F0; /* Separator lines */
             padding: 40px 0;
+            border-bottom: 1px solid #DED6C5; 
         }
-
+        
         .skill-card h4 {
             font-family: var(--font-heading);
             font-size: 1.5em;
+            font-weight: 500;
             color: var(--text-dark);
             margin-bottom: 20px;
+            letter-spacing: 0.02em;
         }
 
         .skill-card ul {
@@ -204,116 +208,123 @@
             padding: 0;
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
         }
 
-        /* Skill tags instead of list */
         .skill-card li {
-            background: var(--bg-subtle);
+            background: var(--bg-sand-light);
             padding: 8px 16px;
             border-radius: 4px;
-            font-size: 0.9em;
+            font-size: 0.95em;
             font-weight: 500;
             color: var(--text-dark);
-            border: 1px solid #E2E8F0;
+            border: 1px solid #E2D9C8;
         }
 
-        .stack-note {
-            font-size: 0.9em;
-            color: #64748B;
-            font-style: italic;
-            border-left: 3px solid var(--accent);
-            padding-left: 20px;
-        }
-
-        /* --- EDUCATION GRID --- */
+        /* --- EDUCATION GRID (3 Columns) --- */
         .education-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr); /* 3 Equal Columns */
             gap: 20px;
+            margin-bottom: 40px;
         }
 
         .education-item {
-            background: var(--bg-subtle);
-            padding: 40px;
-            border-left: 4px solid var(--text-dark); /* Dark border for gravitas */
+            background: var(--bg-white);
+            padding: 35px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(13, 59, 76, 0.05);
+            border-top: 4px solid var(--accent-coral);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         .education-item h4 {
             font-family: var(--font-heading);
-            font-size: 1.4em;
-            margin-bottom: 10px;
+            font-size: 1.3em;
+            font-weight: 500;
+            margin-bottom: 15px;
             color: var(--text-dark);
+            line-height: 1.3;
         }
 
         .edu-institution {
             font-weight: 600;
-            color: var(--accent);
+            color: var(--accent-teal);
             text-transform: uppercase;
-            font-size: 0.9em;
+            font-size: 0.85em;
             letter-spacing: 0.05em;
+            margin-top: auto; /* Pushes to bottom if heights vary */
+        }
+        
+        .edu-detail {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-top: 5px;
         }
 
         /* --- SECTIONS COLORING --- */
-        #hero-section { background-color: var(--bg-hero); text-align: center; display: flex; align-items: center; justify-content: center; }
-        #summary { background-color: var(--bg-white); }
-        #skills { background-color: var(--bg-white); }
-        #experience { background-color: var(--bg-subtle); } /* Subtle gray for timeline */
-        #education { background-color: var(--bg-white); }
-        #awards { background-color: var(--bg-dark); color: var(--text-light); }
+        #hero-section { 
+            background: linear-gradient(135deg, var(--bg-ocean-deep) 0%, #082633 100%);
+            text-align: center; display: flex; align-items: center; justify-content: center; min-height: 90vh;
+        }
+        #summary { background-color: var(--bg-sand-light); }
+        #skills { background-color: var(--bg-sand-warm); }
+        #experience { background-color: var(--bg-sand-light); }
+        #education { background-color: var(--bg-sand-warm); }
+        #awards { 
+            background: linear-gradient(135deg, var(--bg-ocean-deep) 0%, #082633 100%);
+            color: var(--text-light); 
+        }
         
-        /* --- TIMELINE (Clean & Technical) --- */
+        /* --- TIMELINE --- */
         .timeline-section { padding-top: 100px; }
         .timeline-container {
             display: flex;
             flex-direction: column;
             position: relative;
-            max-width: 900px;
             margin: 0 auto;
+            max-width: 900px;
         }
         
-        /* The Line */
         .timeline-container::before {
             content: '';
             position: absolute;
-            left: 0; /* Line on LEFT side now (more standard for docs) */
+            left: 20px; 
             top: 0;
             bottom: 0;
-            width: 1px;
-            background-color: #CBD5E1;
+            width: 4px;
+            background-color: var(--bg-sand-warm);
+            border-radius: 2px;
         }
 
         .timeline-item {
             display: flex;
             margin-bottom: 60px;
             position: relative;
-            padding-left: 50px; /* Space from line */
+            padding-left: 70px; 
         }
 
-        /* The Dot */
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -5px; /* Centered on line */
-            top: 0;
-            width: 11px;
-            height: 11px;
-            background-color: var(--bg-white);
-            border: 2px solid var(--accent);
+            left: 12px; 
+            top: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: var(--bg-sand-light);
+            border: 4px solid var(--accent-coral);
             border-radius: 50%;
             z-index: 10;
-        }
-
-        /* Active dot */
-        .timeline-item.active::before {
-            background-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--bg-sand-warm);
         }
 
         .timeline-date {
-            min-width: 120px;
+            min-width: 140px;
             font-family: var(--font-heading);
-            font-size: 1.2em;
-            color: var(--accent);
+            font-size: 1.3em;
+            color: var(--accent-coral);
             font-weight: 500;
             padding-top: 0;
             margin-right: 30px;
@@ -321,65 +332,91 @@
 
         .timeline-content {
             flex-grow: 1;
+            background: var(--bg-white);
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 5px 20px rgba(13, 59, 76, 0.05);
         }
 
         .timeline-content h4 {
             font-family: var(--font-heading);
             font-size: 1.5em;
+            font-weight: 500;
             margin-bottom: 5px;
             color: var(--text-dark);
         }
 
         .job-location {
-            font-size: 0.9em;
-            color: #64748B;
-            margin-bottom: 15px;
-            font-weight: 500;
+            font-size: 0.95em;
+            color: var(--accent-teal);
+            margin-bottom: 20px;
+            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .timeline-content ul {
             list-style: none;
             padding: 0;
-            border-left: 2px solid #E2E8F0; /* Content line */
-            padding-left: 20px;
         }
         
         .timeline-content li {
-            margin-bottom: 8px;
-            color: var(--text-main);
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .timeline-content li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-teal);
+            border-radius: 50%;
         }
 
         /* --- FOOTER & AWARDS --- */
-        #awards h3, #awards h4 { color: var(--text-light); }
+        #awards h3 { color: var(--text-light); }
+        #awards h3::after { background: var(--accent-teal); } 
+        #awards h4 { color: var(--text-light); font-family: var(--font-heading); font-size: 1.8em; margin-top: 40px;}
         #awards .awards-list { max-width: 800px; margin: 0 auto; }
         #awards ul { list-style: none; padding: 0; margin-bottom: 40px; }
         #awards li { 
             border-bottom: 1px solid rgba(255,255,255,0.1); 
             padding: 15px 0; 
-            font-size: 1.1em;
+            font-size: 1.2em;
+            padding-left: 30px;
+            position: relative;
         }
-        #awards li strong { color: var(--accent); }
+        #awards li::before { content: '★'; position: absolute; left: 0; color: var(--accent-teal); }
+        #awards li strong { color: var(--accent-coral); }
 
         footer {
-            background-color: var(--bg-hero);
+            background: linear-gradient(135deg, var(--bg-ocean-deep) 0%, #082633 100%);
             color: var(--text-light);
-            padding: 100px 0 50px 0;
+            padding: 120px 0 60px 0;
             text-align: center;
         }
-        .footer-title { font-family: var(--font-heading); font-size: 4em; margin-bottom: 20px; letter-spacing: -0.02em;}
-        .footer-contact a { color: var(--text-light); text-decoration: none; border-bottom: 1px solid var(--accent); }
+        .footer-title { font-family: var(--font-heading); font-size: 4em; margin-bottom: 20px; font-weight: 700; letter-spacing: 0.02em;}
+        .footer-contact p { font-size: 1.5em; margin-bottom: 10px; }
+        .footer-contact a { color: var(--text-light); text-decoration: none; border-bottom: 2px solid var(--accent-coral); }
+        .copyright { margin-top: 80px; color: var(--text-muted); }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 900px) {
-            .annotation-wrapper { grid-template-columns: 1fr; display: block; }
-            .side-note { border-top: none; border-left: 2px solid var(--accent); padding-top: 0; padding-left: 15px; margin-bottom: 30px; text-align: left !important; justify-self: start; max-width: 100%; }
-            .summary-body { column-count: 1; }
-            .skill-row { grid-template-columns: 1fr; gap: 20px; }
-            .education-grid { grid-template-columns: 1fr; }
-            .timeline-item { flex-direction: column; }
-            .timeline-date { margin-bottom: 10px; }
+            .summary-card { padding: 30px; }
+            .education-grid { grid-template-columns: 1fr; } /* Stack education on mobile */
+            .timeline-item { flex-direction: column; padding-left: 50px; }
+            .timeline-container::before { left: 10px; }
+            .timeline-item::before { left: 2px; }
+            .timeline-date { margin-bottom: 15px; }
             h1 { font-size: 3.5em; }
+            
+            .narrative-break { padding: 30px 0; margin-top: 40px; }
+            .quote-text { font-size: 1.4em; }
         }
     </style>
 </head>
@@ -388,7 +425,7 @@
     <header id="hero-section" class="section">
         <div class="container hero-content">
             <h1>David C. Tran</h1>
-            <h2>Writer <span style="color:var(--accent)">/</span> Educator <span style="color:var(--accent)">/</span> Strategist</h2>
+            <h2>Writer <span style="color:var(--accent-coral)">/</span> Educator <span style="color:var(--accent-coral)">/</span> Strategist</h2>
         </div>
     </header>
 
@@ -397,22 +434,18 @@
             <div class="container">
                 <h3><span class="section-num">01.</span> Summary</h3>
                 
-                <div class="annotation-wrapper">
-                    <div class="side-note note-left">
-                        "From chalkboard to iPad to AI."
+                <div class="summary-card">
+                    <span class="summary-lead">
+                        Writing coach and English educator with <span style="color:var(--accent-coral)">20+ years of experience</span> building scalable curriculum systems.
+                    </span>
+                    <div class="summary-body">
+                        Expert in coaching students through high-stakes writing processes, from college essays to analytical composition, while developing faculty capacity through targeted professional development. Proven track record of scaling writing programs from 150 to <strong>400+ students</strong>, designing equity-driven learning supports for diverse populations, and leading institutional adoption of <strong>ethical AI practices</strong> in education. Combines advanced degrees in creative writing with practical expertise in differentiated instruction, assessment design, and educational technology.
                     </div>
+                </div>
 
-                    <div class="summary-card">
-                        <span class="summary-lead">
-                            Writing coach and English educator with <span style="color:var(--accent)">20+ years of experience</span> building scalable curriculum systems.
-                        </span>
-                        <div class="summary-body">
-                            Expert in coaching students through high-stakes writing processes, from college essays to analytical composition, while developing faculty capacity through targeted professional development. Proven track record of scaling writing programs from 150 to <strong>400+ students</strong>, designing equity-driven learning supports for diverse populations, and leading institutional adoption of <strong>ethical AI practices</strong> in education. Combines advanced degrees in creative writing with practical expertise in differentiated instruction, assessment design, and educational technology.
-                        </div>
-                    </div>
-
-                    <div class="side-note note-right">
-                        "Using tech to amplify, not replace, the human voice."
+                <div class="narrative-break">
+                    <div class="quote-text">
+                        "Spanning the evolution from chalkboard to iPad to AI, using tech to amplify—<span class="quote-highlight">not replace</span>—the human voice."
                     </div>
                 </div>
             </div>
@@ -423,7 +456,6 @@
                 <h3><span class="section-num">02.</span> Expertise</h3>
                 
                 <div class="skills-stack">
-                    
                     <div class="skill-row">
                         <div class="skill-card">
                             <h4>AI Integration & EdTech</h4>
@@ -434,11 +466,7 @@
                                 <li>LMS Architecture</li>
                             </ul>
                         </div>
-                        <div class="stack-note">
-                            "We don't teach AI to replace writing. We teach it to challenge students to write <strong>better</strong> than the algorithm."
-                        </div>
                     </div>
-
                     <div class="skill-row">
                         <div class="skill-card">
                             <h4>Instruction & Coaching</h4>
@@ -449,9 +477,7 @@
                                 <li>Differentiated Instruction</li>
                             </ul>
                         </div>
-                        <div></div>
                     </div>
-
                     <div class="skill-row">
                         <div class="skill-card">
                             <h4>Program Leadership</h4>
@@ -462,12 +488,15 @@
                                 <li>Equity-Driven Pedagogy</li>
                             </ul>
                         </div>
-                        <div class="stack-note">
-                            "Scaling a program isn't just about adding numbers; it's about building systems that protect the <strong>human connection</strong>."
-                        </div>
                     </div>
-
                 </div>
+
+                <div class="narrative-break">
+                    <div class="quote-text">
+                        "We teach AI to challenge students to write <span class="quote-highlight">better</span> than the algorithm."
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -482,7 +511,7 @@
                             <h4>College Essay Writing Coach</h4>
                             <p class="job-location">Gulliver Preparatory School, Pinecrest, FL</p>
                             <ul>
-                                <li>Coached high school juniors and seniors through the complete college essay writing process (Common App & supplements).</li>
+                                <li>Coached high school juniors and seniors through the complete college essay writing process.</li>
                                 <li>Designed comprehensive college essay curriculum with semester-long asynchronous modules.</li>
                                 <li>Led professional development on <strong>ethical AI integration</strong>.</li>
                             </ul>
@@ -547,31 +576,32 @@
             <div class="container">
                 <h3><span class="section-num">04.</span> Education</h3>
                 
-                <div class="annotation-wrapper">
-                    <div class="side-note note-left">
-                        "Creative writing is the ultimate training in empathy, structure, and persuasion—the core of all good curriculum."
-                    </div>
-
-                    <div class="education-grid">
-                        <div class="education-item">
-                            <h4>MFA in Creative Writing</h4>
+                <div class="education-grid">
+                    <div class="education-item">
+                        <h4>MFA in Creative Writing</h4>
+                        <div>
                             <p class="edu-institution">University of Mississippi</p>
-                            <p>John Grisham Scholarship (Full Ride)</p>
-                        </div>
-                        
-                        <div class="education-item">
-                            <h4>BFA in Creative Writing</h4>
-                            <p class="edu-institution">Bowling Green State University</p>
-                        </div>
-                        
-                        <div class="education-item">
-                            <h4>Certification in TESOL</h4>
-                            <p class="edu-institution">Specialization in English Learners</p>
+                            <p class="edu-detail">John Grisham Scholarship (Full Ride)</p>
                         </div>
                     </div>
-
-                    <div class="empty-col"></div>
+                    
+                    <div class="education-item">
+                        <h4>BFA in Creative Writing</h4>
+                        <p class="edu-institution">Bowling Green State University</p>
+                    </div>
+                    
+                    <div class="education-item">
+                        <h4>Certification in TESOL</h4>
+                        <p class="edu-institution">Specialization in English Learners</p>
+                    </div>
                 </div>
+
+                <div class="narrative-break">
+                    <div class="quote-text">
+                        "Creative writing is the ultimate training in <span class="quote-highlight">empathy & structure</span>—the core of all good curriculum."
+                    </div>
+                </div>
+
             </div>
         </section>
         
@@ -632,14 +662,6 @@
                         start: "top 85%",
                         toggleActions: "play none none reverse"
                     }
-                });
-                
-                // Active class for the dot
-                ScrollTrigger.create({
-                    trigger: item,
-                    start: "top center",
-                    end: "bottom center",
-                    toggleClass: "active"
                 });
             });
 
