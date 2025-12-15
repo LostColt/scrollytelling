@@ -31,35 +31,75 @@
             background-color: var(--primary-color);
             line-height: 1.6;
             scroll-behavior: smooth;
-            overflow-x: hidden; /* Prevents scrollbar jumping during zoom */
+            overflow-x: hidden;
         }
 
         /* General Layout */
         main {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 40px;
+            position: relative;
+            z-index: 2; /* Ensures content sits above background images */
         }
 
         .section {
             padding: 100px 0;
             min-height: 100vh;
+            position: relative;
+            overflow: hidden; /* Keeps background images contained */
+        }
+
+        /* Background Image Utility */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+
+        /* Dark Overlay Utility */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.85); /* Heavy dark overlay for readability */
+            z-index: 1;
+        }
+        
+        /* Lighter overlay for footer/hero where image should be more visible */
+        .overlay-light {
+            background: rgba(10, 10, 10, 0.75); 
         }
 
         /* Headings & Typography */
         h1 {
             font-family: var(--font-heading);
-            font-size: 5em;
-            letter-spacing: 0.15em;
+            font-size: clamp(3em, 8vw, 6em); /* Responsive font size */
+            letter-spacing: 0.1em;
             color: var(--accent-color);
             line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
         h2 {
             font-family: var(--font-body);
             font-weight: 300;
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: clamp(1.2em, 3vw, 1.8em);
+            margin-bottom: 30px;
             color: var(--secondary-color);
         }
 
@@ -78,7 +118,12 @@
             margin-right: 15px;
         }
 
-        /* Hero Section */
+        strong {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* --- HERO SECTION --- */
         #hero-section {
             min-height: 100vh;
             display: flex;
@@ -86,34 +131,40 @@
             justify-content: center;
             text-align: center;
         }
-
-        .contact-info {
+        
+        .hero-contact {
             font-size: 1.1em;
-            font-weight: 300;
-            opacity: 0.7;
+            letter-spacing: 1px;
+            opacity: 0.8;
             margin-top: 20px;
         }
 
-        /* Summary Section */
-        .summary-text {
-            font-size: 1.4em;
-            font-weight: 300;
-            line-height: 1.7;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        strong {
-            color: var(--accent-color);
-            font-weight: 600;
+        /* --- SUMMARY SECTION --- */
+        #summary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Skills Grid */
-        #skills .skills-grid,
-        #education .education-grid {
+        .summary-text {
+            font-size: 1.5em;
+            font-weight: 300;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            /* Anchoring Treatment */
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-left: 4px solid var(--accent-color);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* --- SKILLS & EDUCATION GRID --- */
+        .skills-grid, .education-grid {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             gap: 30px;
             padding-top: 20px;
             text-align: left;
@@ -123,12 +174,18 @@
         .skill-category,
         .education-item {
             flex: 1;
-            min-width: 250px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 5px;
-            border-top: 3px solid var(--accent-color);
+            min-width: 280px;
+            padding: 25px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            border-radius: 4px;
+            border-top: 2px solid var(--accent-color);
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .skill-category:hover, .education-item:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
         }
 
         .skill-category h4,
@@ -146,12 +203,12 @@
         }
 
         .skill-category li {
-            padding: 5px 0;
+            padding: 8px 0;
             border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
             font-size: 0.95em;
         }
 
-        /* Education and Awards */
+        /* Education specifics */
         .edu-institution {
             font-style: italic;
             opacity: 0.8;
@@ -163,12 +220,13 @@
             margin-top: 5px;
         }
 
+        /* --- AWARDS SECTION --- */
         #awards .awards-list h4 {
             font-family: var(--font-heading);
             font-size: 1.8em;
             letter-spacing: 0.05em;
             margin-top: 40px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 5px;
         }
@@ -178,15 +236,18 @@
             padding-left: 0;
         }
         #awards .awards-list li {
-            margin-bottom: 10px;
-            padding-left: 20px;
+            margin-bottom: 12px;
+            padding-left: 25px;
             position: relative;
+            font-size: 1.1em;
+            font-weight: 300;
         }
         #awards .awards-list li::before {
             content: '★';
             color: var(--accent-color);
             position: absolute;
             left: 0;
+            top: 2px;
         }
 
         /* --- CINEMATIC TIMELINE STYLING --- */
@@ -198,7 +259,7 @@
         .timeline-container {
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 20px 0;
             position: relative;
         }
 
@@ -209,14 +270,14 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
             transform: translateX(-50%);
         }
 
         .timeline-item {
             display: flex;
             justify-content: space-between;
-            margin: 40px 0;
+            margin: 60px 0;
             position: relative;
             transition: box-shadow 0.3s ease; 
         }
@@ -227,72 +288,77 @@
 
         .timeline-item:nth-child(odd) .timeline-content {
             text-align: right;
-            padding-right: 50px;
+            padding-right: 60px;
         }
 
         .timeline-item:nth-child(even) .timeline-content {
             text-align: left;
-            padding-left: 50px;
+            padding-left: 60px;
         }
 
         .timeline-date {
             font-family: var(--font-heading);
-            font-size: 1.5em;
+            font-size: 1.8em;
             letter-spacing: 0.08em;
             color: var(--accent-color);
-            width: 20%;
+            width: 15%;
             text-align: center;
             flex-shrink: 0; 
             z-index: 10;
             position: relative; 
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
 
         .timeline-date::after {
             content: '';
             position: absolute;
             top: 50%;
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             background-color: var(--accent-color);
             border-radius: 50%;
             transform: translateY(-50%);
             z-index: 11;
+            box-shadow: 0 0 10px var(--accent-color);
         }
 
         .timeline-item:nth-child(even) .timeline-date::after {
-            right: -6px;
+            right: -7px;
         }
 
         .timeline-item:nth-child(odd) .timeline-date::after {
-            left: -6px;
+            left: -7px;
         }
 
         .timeline-content {
-            width: 40%;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 2px solid var(--accent-color);
+            width: 42%;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-color);
             flex-grow: 1; 
+            border-radius: 0 5px 5px 0;
         }
 
         .timeline-item:nth-child(odd) .timeline-content {
             border-left: none;
-            border-right: 2px solid var(--accent-color);
+            border-right: 3px solid var(--accent-color);
+            border-radius: 5px 0 0 5px;
         }
 
         .timeline-content h4 {
             font-family: var(--font-body);
             font-weight: 600;
-            font-size: 1.2em;
+            font-size: 1.4em;
             margin-bottom: 5px;
             color: var(--secondary-color);
         }
 
         .job-location {
             font-weight: 300;
-            font-size: 0.9em;
-            margin-bottom: 10px;
+            font-size: 1em;
+            margin-bottom: 15px;
             opacity: 0.7;
+            font-style: italic;
         }
 
         .timeline-content ul {
@@ -303,7 +369,7 @@
         .timeline-content li {
             position: relative;
             padding-left: 20px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .timeline-content li::before {
@@ -314,29 +380,81 @@
         }
 
         .timeline-item.active {
-            box-shadow: 0 0 40px rgba(230, 179, 74, 0.3);
+            box-shadow: 0 0 50px rgba(230, 179, 74, 0.15);
             z-index: 20;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 50px 20px;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-title {
+            font-family: var(--font-heading);
+            font-size: 5em;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .footer-contact p {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .footer-contact a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent-color);
+            transition: color 0.3s;
+        }
+
+        .footer-contact a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            margin-top: 80px;
+            font-size: 0.9em;
+            opacity: 0.5;
         }
         
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .timeline-container::before { left: 20px; }
-            .timeline-item, .timeline-item:nth-child(odd) { flex-direction: column; align-items: flex-start; }
-            .timeline-date { width: auto; text-align: left; margin-bottom: 10px; margin-left: 40px; }
-            .timeline-content, .timeline-item:nth-child(odd) .timeline-content { width: 100%; text-align: left; padding-left: 40px; padding-right: 0; border: none; border-left: 2px solid var(--accent-color); }
+            .timeline-item, .timeline-item:nth-child(odd) { flex-direction: column; align-items: flex-start; margin: 40px 0; }
+            .timeline-date { width: auto; text-align: left; margin-bottom: 15px; margin-left: 45px; font-size: 1.5em; }
+            .timeline-content, .timeline-item:nth-child(odd) .timeline-content { width: 100%; text-align: left; padding: 25px; border: none; border-left: 3px solid var(--accent-color); border-radius: 0 5px 5px 0; }
             .timeline-date::after { left: 14px !important; right: auto !important; }
-            h1 { font-size: 3em; }
-            h3 { font-size: 2em; }
+            
+            h1 { font-size: 3.5em; }
+            h3 { font-size: 2.2em; }
+            .summary-text { font-size: 1.1em; padding: 25px; }
+            .footer-title { font-size: 3.5em; }
         }
     </style>
 </head>
 <body>
 
     <header id="hero-section" class="section">
-        <div class="hero-content">
+        <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop');"></div>
+        <div class="overlay overlay-light"></div>
+        
+        <div class="container hero-content">
             <h1>DAVID C. TRAN</h1>
             <h2>Writing Coach, Curriculum Designer, & AI Integration Specialist</h2>
-            <p class="contact-info">
+            <p class="hero-contact">
                 trandavidc@gmail.com | Miami, FL
             </p>
         </div>
@@ -344,165 +462,192 @@
 
     <main>
         <section id="summary" class="section">
-            <h3><span class="section-title-accent">01.</span> Professional Summary</h3>
-            <p class="summary-text">
-                Writing coach and English educator with <strong>20+ years of experience</strong> building scalable curriculum systems that blend traditional writing pedagogy with <strong>AI integration</strong>. Expert in coaching students through high-stakes writing processes, from college essays to analytical composition, while developing faculty capacity through targeted professional development. Proven track record of scaling writing programs from 150 to <strong>400+ students</strong>, designing equity-driven learning supports for diverse populations, and leading institutional adoption of <strong>ethical AI practices</strong> in education. Combines advanced degrees in creative writing with practical expertise in differentiated instruction, assessment design, and educational technology.
-            </p>
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=2573&auto=format&fit=crop');"></div>
+            <div class="overlay"></div>
+
+            <div class="container">
+                <h3><span class="section-title-accent">01.</span> Professional Summary</h3>
+                <div class="summary-text">
+                    Writing coach and English educator with <strong>20+ years of experience</strong> building scalable curriculum systems that blend traditional writing pedagogy with <strong>AI integration</strong>. Expert in coaching students through high-stakes writing processes, from college essays to analytical composition, while developing faculty capacity through targeted professional development. Proven track record of scaling writing programs from 150 to <strong>400+ students</strong>, designing equity-driven learning supports for diverse populations, and leading institutional adoption of <strong>ethical AI practices</strong> in education. Combines advanced degrees in creative writing with practical expertise in differentiated instruction, assessment design, and educational technology.
+                </div>
+            </div>
         </section>
 
         <section id="skills" class="section">
-            <h3><span class="section-title-accent">02.</span> Core Skills & Expertise</h3>
-            <div class="skills-grid">
-                
-                <div class="skill-category">
-                    <h4>AI Integration & EdTech</h4>
-                    <ul>
-                        <li>Ethical AI Implementation</li>
-                        <li>Generative AI Workflows</li>
-                        <li>AI-Assisted Research & Writing</li>
-                        <li>Learning Management Systems (LMS)</li>
-                    </ul>
+            <div class="container">
+                <h3><span class="section-title-accent">02.</span> Core Skills & Expertise</h3>
+                <div class="skills-grid">
+                    
+                    <div class="skill-category">
+                        <h4>AI Integration & EdTech</h4>
+                        <ul>
+                            <li>Ethical AI Implementation</li>
+                            <li>Generative AI Workflows</li>
+                            <li>AI-Assisted Research & Writing</li>
+                            <li>Learning Management Systems (LMS)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Instruction & Coaching</h4>
+                        <ul>
+                            <li>College Essay Coaching</li>
+                            <li>Composition Pedagogy & Feedback</li>
+                            <li>Narrative Structure & Voice Development</li>
+                            <li>Differentiated Instruction</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h4>Program Leadership</h4>
+                        <ul>
+                            <li>Curriculum Development & Scaling</li>
+                            <li>Faculty Development & Training</li>
+                            <li>Assessment & Data-Informed Practice</li>
+                            <li>Equity-Driven Pedagogy (504, IEP, ESE)</li>
+                        </ul>
+                    </div>
                 </div>
-                
-                <div class="skill-category">
-                    <h4>Instruction & Coaching</h4>
-                    <ul>
-                        <li>College Essay Coaching</li>
-                        <li>Composition Pedagogy & Feedback</li>
-                        <li>Narrative Structure & Voice Development</li>
-                        <li>Differentiated Instruction</li>
-                    </ul>
-                </div>
-                
-                <div class="skill-category">
-                    <h4>Program Leadership</h4>
-                    <ul>
-                        <li>Curriculum Development & Scaling</li>
-                        <li>Faculty Development & Training</li>
-                        <li>Assessment & Data-Informed Practice</li>
-                        <li>Equity-Driven Pedagogy (504, IEP, ESE)</li>
-                    </ul>
-                </div>
-
             </div>
         </section>
 
         <section id="experience" class="section timeline-section">
-            <h3><span class="section-title-accent">03.</span> Job History & Experience</h3>
-            
-            <div class="timeline-container">
-                <article class="timeline-item">
-                    <div class="timeline-date">AUG 2025 – PRESENT</div>
-                    <div class="timeline-content">
-                        <h4>College Essay Writing Coach</h4>
-                        <p class="job-location">Gulliver Preparatory School, Pinecrest, FL</p>
-                        <ul>
-                            <li>Coached high school juniors and seniors through the complete college essay writing process (Common App & supplements) for competitive universities.</li>
-                            <li>Designed comprehensive college essay curriculum with semester-long asynchronous modules and monthly touchpoints, focusing on <strong>authentic voice development</strong>.</li>
-                            <li>Led professional development presentations on college essay instruction, <strong>ethical AI integration</strong> in writing, and effective feedback strategies.</li>
-                            <li>Created equity-driven strategies to support diverse student populations, including international students, shifting focus from achievement narratives to <strong>genuine storytelling</strong>.</li>
-                        </ul>
-                    </div>
-                </article>
+            <div class="container">
+                <h3><span class="section-title-accent">03.</span> Job History & Experience</h3>
                 
-                <article class="timeline-item">
-                    <div class="timeline-date">JAN 2021 – DEC 2024</div>
-                    <div class="timeline-content">
-                        <h4>English Composition Teacher & American Literature Teacher</h4>
-                        <p class="job-location">IMG Academy, Bradenton, FL</p>
-                        <ul>
-                            <li>Designed a writing-intensive curriculum emphasizing analytical essays and research papers for student-athletes, improving academic outcomes.</li>
-                            <li>Integrated AI tools and digital platforms, leading <strong>college essay workshops</strong> supporting 150+ students annually, and expanded participation to over <strong>400 students</strong>.</li>
-                            <li>Conducted faculty training sessions on rubric design, <strong>AI-assisted research</strong>, and differentiated instruction to improve pedagogical effectiveness.</li>
-                            <li>Collaborated with the Learning Resource Center to support students with 504 plans and IEPs, enhancing organizational skills and coursework completion by <strong>20%</strong>.</li>
-                        </ul>
-                    </div>
-                </article>
-                
-                <article class="timeline-item">
-                    <div class="timeline-date">AUG 2017 – DEC 2020</div>
-                    <div class="timeline-content">
-                        <h4>Director of Learning Lab & English Teacher</h4>
-                        <p class="job-location">Country Day School, Largo, FL</p>
-                        <ul>
-                            <li>Directed the Learning Lab, overseeing learning specialists and academic interventions for students with diverse needs.</li>
-                            <li>Developed individualized education plans (IEPs) in collaboration with families and faculty, achieving an <strong>85% success rate</strong> in meeting student goals.</li>
-                            <li>Provided professional development workshops on technology integration, writing instruction, and student advocacy.</li>
-                            <li>Designed and implemented literature-based and composition-focused curricula that incorporated project-based learning.</li>
-                        </ul>
-                    </div>
-                </article>
-                
-                <article class="timeline-item">
-                    <div class="timeline-date">AUG 2013 – MAY 2017</div>
-                    <div class="timeline-content">
-                        <h4>University Instructor – Composition, Literature, and Creative Writing</h4>
-                        <p class="job-location">University of Mississippi, Oxford, MS</p>
-                        <ul>
-                            <li>Taught senior-level Creative Writing, first-year Composition (analytical writing, research), and American/British literature courses.</li>
-                            <li>Integrated multimodal learning approaches, including <strong>digital portfolios and multimedia presentations</strong>, to increase student engagement.</li>
-                            <li>Provided individualized mentorship and feedback to enhance students' writing and critical thinking skills.</li>
-                        </ul>
-                    </div>
-                </article>
-                
-                <article class="timeline-item">
-                    <div class="timeline-date">AUG 2007 – JUNE 2012</div>
-                    <div class="timeline-content">
-                        <h4>Writing Teacher</h4>
-                        <p class="job-location">Balboa School, San Diego, CA</p>
-                        <ul>
-                            <li>Developed and implemented writing curricula emphasizing personal voice, rhetorical strategies, and argumentation.</li>
-                            <li>Worked closely with ESE students, updating IEPs and tailoring instruction to diverse learning styles.</li>
-                            <li>Facilitated writing workshops to improve student skills in organization, public speaking, and composition.</li>
-                        </ul>
-                    </div>
-                </article>
+                <div class="timeline-container">
+                    <article class="timeline-item">
+                        <div class="timeline-date">AUG 2025 – PRESENT</div>
+                        <div class="timeline-content">
+                            <h4>College Essay Writing Coach</h4>
+                            <p class="job-location">Gulliver Preparatory School, Pinecrest, FL</p>
+                            <ul>
+                                <li>Coached high school juniors and seniors through the complete college essay writing process (Common App & supplements) for competitive universities.</li>
+                                <li>Designed comprehensive college essay curriculum with semester-long asynchronous modules and monthly touchpoints, focusing on <strong>authentic voice development</strong>.</li>
+                                <li>Led professional development presentations on college essay instruction, <strong>ethical AI integration</strong> in writing, and effective feedback strategies.</li>
+                                <li>Created equity-driven strategies to support diverse student populations, including international students, shifting focus from achievement narratives to <strong>genuine storytelling</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="timeline-item">
+                        <div class="timeline-date">JAN 2021 – DEC 2024</div>
+                        <div class="timeline-content">
+                            <h4>English Composition Teacher & American Literature Teacher</h4>
+                            <p class="job-location">IMG Academy, Bradenton, FL</p>
+                            <ul>
+                                <li>Designed a writing-intensive curriculum emphasizing analytical essays and research papers for student-athletes, improving academic outcomes.</li>
+                                <li>Integrated AI tools and digital platforms, leading <strong>college essay workshops</strong> supporting 150+ students annually, and expanded participation to over <strong>400 students</strong>.</li>
+                                <li>Conducted faculty training sessions on rubric design, <strong>AI-assisted research</strong>, and differentiated instruction to improve pedagogical effectiveness.</li>
+                                <li>Collaborated with the Learning Resource Center to support students with 504 plans and IEPs, enhancing organizational skills and coursework completion by <strong>20%</strong>.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="timeline-item">
+                        <div class="timeline-date">AUG 2017 – DEC 2020</div>
+                        <div class="timeline-content">
+                            <h4>Director of Learning Lab & English Teacher</h4>
+                            <p class="job-location">Country Day School, Largo, FL</p>
+                            <ul>
+                                <li>Directed the Learning Lab, overseeing learning specialists and academic interventions for students with diverse needs.</li>
+                                <li>Developed individualized education plans (IEPs) in collaboration with families and faculty, achieving an <strong>85% success rate</strong> in meeting student goals.</li>
+                                <li>Provided professional development workshops on technology integration, writing instruction, and student advocacy.</li>
+                                <li>Designed and implemented literature-based and composition-focused curricula that incorporated project-based learning.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="timeline-item">
+                        <div class="timeline-date">AUG 2013 – MAY 2017</div>
+                        <div class="timeline-content">
+                            <h4>University Instructor – Composition, Literature, and Creative Writing</h4>
+                            <p class="job-location">University of Mississippi, Oxford, MS</p>
+                            <ul>
+                                <li>Taught senior-level Creative Writing, first-year Composition (analytical writing, research), and American/British literature courses.</li>
+                                <li>Integrated multimodal learning approaches, including <strong>digital portfolios and multimedia presentations</strong>, to increase student engagement.</li>
+                                <li>Provided individualized mentorship and feedback to enhance students' writing and critical thinking skills.</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="timeline-item">
+                        <div class="timeline-date">AUG 2007 – JUNE 2012</div>
+                        <div class="timeline-content">
+                            <h4>Writing Teacher</h4>
+                            <p class="job-location">Balboa School, San Diego, CA</p>
+                            <ul>
+                                <li>Developed and implemented writing curricula emphasizing personal voice, rhetorical strategies, and argumentation.</li>
+                                <li>Worked closely with ESE students, updating IEPs and tailoring instruction to diverse learning styles.</li>
+                                <li>Facilitated writing workshops to improve student skills in organization, public speaking, and composition.</li>
+                            </ul>
+                        </div>
+                    </article>
 
+                </div>
             </div>
         </section>
         
         <section id="education" class="section">
-            <h3><span class="section-title-accent">04.</span> Education & Certifications</h3>
-            <div class="education-grid">
-                
-                <div class="education-item">
-                    <h4>MFA in Creative Writing & Literature</h4>
-                    <p class="edu-institution">University of Mississippi, Oxford, MS</p>
-                    <p class="edu-detail">University of Mississippi John Grisham Scholarship (Full Scholarship & Stipend)</p>
+            <div class="container">
+                <h3><span class="section-title-accent">04.</span> Education & Certifications</h3>
+                <div class="education-grid">
+                    
+                    <div class="education-item">
+                        <h4>MFA in Creative Writing & Literature</h4>
+                        <p class="edu-institution">University of Mississippi, Oxford, MS</p>
+                        <p class="edu-detail">University of Mississippi John Grisham Scholarship (Full Scholarship & Stipend)</p>
+                    </div>
+                    
+                    <div class="education-item">
+                        <h4>BFA in Creative Writing & Literature</h4>
+                        <p class="edu-institution">Bowling Green State University, Bowling Green, OH</p>
+                    </div>
+                    
+                    <div class="education-item">
+                        <h4>Certification in TESOL/TESL/TEFL</h4>
+                    </div>
                 </div>
-                
-                <div class="education-item">
-                    <h4>BFA in Creative Writing & Literature</h4>
-                    <p class="edu-institution">Bowling Green State University, Bowling Green, OH</p>
-                </div>
-                
-                <div class="education-item">
-                    <h4>Certification in TESOL/TESL/TEFL</h4>
-                </div>
-
             </div>
         </section>
         
         <section id="awards" class="section">
-            <h3><span class="section-title-accent">05.</span> Leadership, Publications & Awards</h3>
-            <div class="awards-list">
-                
-                <h4>Professional Development & Leadership</h4>
-                <ul>
-                    <li>Designed and delivered PD on integrating <strong>generative AI workflows</strong> in education, reaching 200+ faculty members across multiple schools.</li>
-                    <li>Led 20+ cross-disciplinary workshops on AI-assisted content creation, resulting in <strong>75% of participants adopting AI tools</strong> in their teaching practice.</li>
-                    <li>Created faculty training programs on rubric design, differentiated instruction, and effective feedback strategies.</li>
-                </ul>
+            <div class="container">
+                <h3><span class="section-title-accent">05.</span> Leadership, Publications & Awards</h3>
+                <div class="awards-list">
+                    
+                    <h4>Professional Development & Leadership</h4>
+                    <ul>
+                        <li>Designed and delivered PD on integrating <strong>generative AI workflows</strong> in education, reaching 200+ faculty members across multiple schools.</li>
+                        <li>Led 20+ cross-disciplinary workshops on AI-assisted content creation, resulting in <strong>75% of participants adopting AI tools</strong> in their teaching practice.</li>
+                        <li>Created faculty training programs on rubric design, differentiated instruction, and effective feedback strategies.</li>
+                    </ul>
 
-                <h4>Publications and Awards</h4>
-                <ul>
-                    <li>University of Mississippi Bondurant Award (Prose)</li>
-                    <li>University of Mississippi Stayton Award (Prose & CNF)</li>
-                    <li>Publications in <em>PANK Magazine</em> and <em>Human Parts: Medium</em></li>
-                </ul>
+                    <h4>Publications and Awards</h4>
+                    <ul>
+                        <li>University of Mississippi Bondurant Award (Prose)</li>
+                        <li>University of Mississippi Stayton Award (Prose & CNF)</li>
+                        <li>Publications in <em>PANK Magazine</em> and <em>Human Parts: Medium</em></li>
+                    </ul>
+                </div>
             </div>
         </section>
+
+        <footer id="contact">
+            <div class="bg-image" style="background-image: url('https://images.unsplash.com/photo-1472145246862-b24cf25c4a36?q=80&w=2071&auto=format&fit=crop');"></div>
+            <div class="overlay overlay-light"></div>
+
+            <div class="container footer-content">
+                <h2 class="footer-title">LET'S CONNECT</h2>
+                <div class="footer-contact">
+                    <p><a href="mailto:trandavidc@gmail.com">trandavidc@gmail.com</a></p>
+                    <p>Miami, FL</p>
+                </div>
+                <div class="copyright">
+                    &copy; 2025 David C. Tran. All Rights Reserved.
+                </div>
+            </div>
+        </footer>
 
     </main>
     
@@ -512,43 +657,34 @@
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
             
-            // Register the ScrollTrigger plugin with GSAP
             gsap.registerPlugin(ScrollTrigger);
 
-            // Select all timeline items
             const timelineItems = document.querySelectorAll('.timeline-item');
 
-            // --- CINEMATIC ZOOM EFFECT IMPLEMENTATION ---
+            // --- CINEMATIC ZOOM EFFECT FOR TIMELINE ---
             timelineItems.forEach((item) => {
                 
-                // 1. Set initial state immediately
-                gsap.set(item, {
-                    scale: 0.85, 
-                    opacity: 0.4
-                });
+                // Set initial state
+                gsap.set(item, { scale: 0.85, opacity: 0.4 });
 
-                // 2. Create the ScrollTrigger
                 ScrollTrigger.create({
                     trigger: item,
-                    start: "top bottom", // Start when item enters bottom of screen
-                    end: "bottom top",   // End when item leaves top of screen
-                    scrub: true,         // Link to scrollbar
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true,
                     
                     onUpdate: (self) => {
                         const progress = self.progress;
                         
-                        // Calculate sine wave for peak center effect
-                        // Peak (1.0) is at progress 0.5 (center of viewport)
+                        // Sine wave math for peek center effect
                         let scaleValue = 0.85 + (0.15 * Math.sin(progress * Math.PI));
                         let opacityValue = 0.4 + (0.6 * Math.sin(progress * Math.PI));
 
-                        // Use gsap.set for instant, glitch-free updates
                         gsap.set(item, {
                             scale: scaleValue,
                             opacity: opacityValue
                         });
 
-                        // Add active class for CSS glow
                         if (progress > 0.25 && progress < 0.75) {
                             item.classList.add('active');
                         } else {
@@ -558,9 +694,10 @@
                 });
             });
 
-            // Optional: Fade-in for other sections
+            // --- FADE IN FOR SECTIONS ---
+            // Animates generic sections up on scroll
             document.querySelectorAll('section:not(#hero-section):not(.timeline-section)').forEach(section => {
-                gsap.from(section, {
+                gsap.from(section.querySelector('.container'), {
                     opacity: 0,
                     y: 50,
                     duration: 1,
@@ -572,7 +709,19 @@
                 });
             });
             
-            // Force refresh to ensure positions are calculated after layout settles
+            // --- FADE IN FOR FOOTER ---
+            gsap.from(".footer-content", {
+                opacity: 0,
+                y: 30,
+                duration: 1.5,
+                scrollTrigger: {
+                    trigger: "footer",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+            
+            // Refresh to ensure positions are calculated after images load
             ScrollTrigger.refresh();
         });
     </script>
