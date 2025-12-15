@@ -18,7 +18,8 @@ body {
     color: var(--secondary-color);
     background-color: var(--primary-color);
     line-height: 1.6;
-    scroll-behavior: smooth; 
+    scroll-behavior: smooth;
+    overflow-x: hidden; /* FIX: Prevents horizontal scrollbars when items zoom */
 }
 
 /* General Layout */
@@ -33,7 +34,7 @@ main {
     min-height: 100vh;
 }
 
-/* Headings & Typography Hierarchy */
+/* Headings & Typography */
 h1 {
     font-family: var(--font-heading);
     font-size: 5em;
@@ -98,15 +99,18 @@ h3 {
     gap: 30px;
     padding-top: 20px;
     text-align: left;
+    flex-wrap: wrap; /* FIX: allows wrapping on smaller screens */
 }
 
 .skill-category,
 .education-item {
     flex: 1;
+    min-width: 250px; /* FIX: minimum width */
     padding: 20px;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 5px;
     border-top: 3px solid var(--accent-color);
+    margin-bottom: 20px;
 }
 
 .skill-category h4,
@@ -129,7 +133,7 @@ h3 {
     font-size: 0.95em;
 }
 
-/* Education and Awards Sections */
+/* Education and Awards */
 .edu-institution {
     font-style: italic;
     opacity: 0.8;
@@ -159,7 +163,6 @@ h3 {
     margin-bottom: 10px;
 }
 
-
 /* --- CINEMATIC TIMELINE STYLING --- */
 .timeline-section {
     position: relative;
@@ -173,7 +176,6 @@ h3 {
     position: relative;
 }
 
-/* The vertical line for the timeline */
 .timeline-container::before {
     content: '';
     position: absolute;
@@ -190,11 +192,10 @@ h3 {
     justify-content: space-between;
     margin: 40px 0;
     position: relative;
-    /* Opacity and Transform handled by GSAP */
+    /* FIX: Removed 'transition' for transform/opacity to prevent fighting JS */
     transition: box-shadow 0.3s ease; 
 }
 
-/* Alternating layout for timeline */
 .timeline-item:nth-child(odd) {
     flex-direction: row-reverse;
 }
@@ -221,7 +222,6 @@ h3 {
     position: relative; 
 }
 
-/* The date-dot on the line */
 .timeline-date::after {
     content: '';
     position: absolute;
@@ -234,7 +234,6 @@ h3 {
     z-index: 11;
 }
 
-/* Positioning the dot */
 .timeline-item:nth-child(even) .timeline-date::after {
     right: -6px;
 }
@@ -276,8 +275,7 @@ h3 {
     padding-left: 20px;
 }
 
-/* Class added by JavaScript when element is active in the center of the viewport */
 .timeline-item.active {
-    box-shadow: 0 0 40px rgba(230, 179, 74, 0.3); /* Cinematic glow */
+    box-shadow: 0 0 40px rgba(230, 179, 74, 0.3);
     z-index: 20;
 }
