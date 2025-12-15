@@ -115,11 +115,10 @@
             color: var(--text-light);
         }
 
-        /* --- ANNOTATION / MARGINALIA SYSTEM --- */
-        /* This grid layout handles the side notes and main cards */
+        /* --- ANNOTATION / MARGINALIA SYSTEM (General) --- */
         .annotation-wrapper {
             display: grid;
-            grid-template-columns: 1fr minmax(300px, 700px) 1fr; /* Flexible center column */
+            grid-template-columns: 1fr minmax(300px, 700px) 1fr;
             gap: 40px;
             align-items: center;
             position: relative;
@@ -137,24 +136,21 @@
             max-width: 220px;
         }
 
-        /* Right-side notes */
         .note-right {
             text-align: left;
             border-left: 3px solid var(--accent);
             justify-self: start;
         }
 
-        /* Left-side notes */
         .note-left {
             text-align: right;
             border-right: 3px solid var(--accent);
             justify-self: end;
         }
         
-        /* Empty column helper for grid alignment */
         .empty-col { display: none; }
 
-        /* --- CARDS & GRIDS --- */
+        /* --- SUMMARY CARD --- */
         .summary-card {
             background-color: #FFFFFF;
             padding: 50px;
@@ -179,14 +175,82 @@
             font-weight: 700;
         }
 
-        .skills-grid, .education-grid {
+        /* --- SKILLS STACK LAYOUT (New Syllabus Style) --- */
+        .skills-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .skill-row {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr; /* Card 65% | Note 35% */
+            gap: 40px;
+            align-items: center;
+        }
+
+        .skill-card {
+            background: #FFFFFF;
+            padding: 35px;
+            border-radius: 6px;
+            border-left: 5px solid var(--accent);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease;
+        }
+        
+        .skill-card:hover {
+            transform: translateX(5px);
+        }
+
+        .skill-card h4 {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1.25em;
+            margin-bottom: 15px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .skill-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .skill-card li {
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--bg-sage);
+            font-size: 1em;
+            color: var(--text-dark);
+        }
+        
+        .skill-card li:last-child {
+            border-bottom: none;
+        }
+
+        .stack-note {
+            font-family: var(--font-body);
+            font-size: 0.95em;
+            font-style: italic;
+            color: var(--text-dark);
+            opacity: 0.7;
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent);
+            line-height: 1.6;
+        }
+
+        /* --- EDUCATION GRID --- */
+        .education-grid {
             display: flex;
             justify-content: space-between;
             gap: 30px;
             flex-wrap: wrap; 
         }
 
-        .skill-category,
         .education-item {
             flex: 1;
             min-width: 280px;
@@ -199,12 +263,11 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .skill-category:hover, .education-item:hover {
+        .education-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .skill-category h4,
         .education-item h4 {
             font-family: var(--font-body);
             font-weight: 700;
@@ -213,17 +276,6 @@
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 0.05em;
-        }
-
-        .skill-category ul {
-            list-style: none;
-        }
-
-        .skill-category li {
-            padding: 8px 0;
-            border-bottom: 1px solid var(--bg-sage);
-            font-size: 0.95em;
-            color: var(--text-dark);
         }
 
         .edu-institution {
@@ -298,6 +350,7 @@
 
         .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
         
+        /* Fixed Alignment: Titles hug center, content aligns appropriately */
         .timeline-item:nth-child(odd) .timeline-content { text-align: right; padding-right: 60px; }
         .timeline-item:nth-child(even) .timeline-content { text-align: left; padding-left: 60px; }
 
@@ -361,7 +414,8 @@
             letter-spacing: 0.05em;
         }
 
-        .timeline-content ul { list-style-type: none; padding-left: 0; }
+        /* Timeline Fix: Force left alignment for list items */
+        .timeline-content ul { list-style-type: none; padding-left: 0; text-align: left; }
         .timeline-content li { position: relative; padding-left: 20px; margin-bottom: 10px; color: var(--text-dark); }
         .timeline-content li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
 
@@ -390,8 +444,15 @@
 
         /* --- MOBILE RESPONSIVENESS --- */
         @media (max-width: 1000px) {
+            /* Annotation Stack Logic */
             .annotation-wrapper { grid-template-columns: 1fr; display: block; }
-            .side-note { display: none; /* Hide margin notes on mobile to save space */ }
+            .side-note { display: none; }
+            
+            /* Skill Stack Logic */
+            .skill-row { display: flex; flex-direction: column; gap: 15px; }
+            .stack-note { border-left: none; border-top: 2px solid var(--accent); padding-left: 0; padding-top: 15px; margin-bottom: 30px; }
+            
+            /* Timeline Logic */
             .timeline-container::before { left: 20px; }
             .timeline-item, .timeline-item:nth-child(odd) { flex-direction: column; align-items: flex-start; margin: 40px 0; }
             .timeline-date { width: auto; text-align: left; margin-bottom: 15px; margin-left: 45px; font-size: 1.5em; }
@@ -445,42 +506,51 @@
             <div class="container">
                 <h3><span class="section-title-accent">02.</span> Core Skills & Expertise</h3>
                 
-                <div class="annotation-wrapper">
-                    <div class="empty-col"></div> <div class="skill-category">
-                        <h4>AI Integration & EdTech</h4>
-                        <ul>
-                            <li>Ethical AI Implementation & Policy</li>
-                            <li>Generative AI Workflows for Faculty</li>
-                            <li>AI-Assisted Research & Writing</li>
-                            <li>Learning Management Systems (LMS)</li>
-                        </ul>
-                    </div>
-
-                    <div class="side-note note-right">
-                        "We don't teach AI to replace writing. We teach it to challenge students to write <strong>better</strong> than the algorithm."
-                    </div>
-                </div>
-
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h4>Instruction & Coaching</h4>
-                        <ul>
-                            <li>College Essay Coaching</li>
-                            <li>Composition Pedagogy & Feedback</li>
-                            <li>Narrative Structure & Voice Development</li>
-                            <li>Differentiated Instruction</li>
-                        </ul>
-                    </div>
+                <div class="skills-stack">
                     
-                    <div class="skill-category">
-                        <h4>Program Leadership</h4>
-                        <ul>
-                            <li>Curriculum Development & Scaling</li>
-                            <li>Faculty Development & Training</li>
-                            <li>Assessment & Data-Informed Practice</li>
-                            <li>Equity-Driven Pedagogy (504, IEP, ESE)</li>
-                        </ul>
+                    <div class="skill-row">
+                        <div class="skill-card">
+                            <h4>AI Integration & EdTech</h4>
+                            <ul>
+                                <li>Ethical AI Implementation & Policy</li>
+                                <li>Generative AI Workflows for Faculty</li>
+                                <li>AI-Assisted Research & Writing</li>
+                                <li>Learning Management Systems (LMS)</li>
+                            </ul>
+                        </div>
+                        <div class="stack-note">
+                            "We don't teach AI to replace writing. We teach it to challenge students to write <strong>better</strong> than the algorithm."
+                        </div>
                     </div>
+
+                    <div class="skill-row">
+                        <div class="skill-card">
+                            <h4>Instruction & Coaching</h4>
+                            <ul>
+                                <li>College Essay Coaching</li>
+                                <li>Composition Pedagogy & Feedback</li>
+                                <li>Narrative Structure & Voice Development</li>
+                                <li>Differentiated Instruction</li>
+                            </ul>
+                        </div>
+                        <div></div>
+                    </div>
+
+                    <div class="skill-row">
+                        <div class="skill-card">
+                            <h4>Program Leadership</h4>
+                            <ul>
+                                <li>Curriculum Development & Scaling</li>
+                                <li>Faculty Development & Training</li>
+                                <li>Assessment & Data-Informed Practice</li>
+                                <li>Equity-Driven Pedagogy (504, IEP, ESE)</li>
+                            </ul>
+                        </div>
+                        <div class="stack-note">
+                            "Scaling a program isn't just about adding numbers; it's about building systems that protect the <strong>human connection</strong>."
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -640,7 +710,7 @@
             const timelineItems = document.querySelectorAll('.timeline-item');
             
             timelineItems.forEach((item) => {
-                // Initial state - slightly scaled down, partial opacity
+                // Initial state
                 gsap.set(item, { scale: 0.9, opacity: 0.5 });
 
                 ScrollTrigger.create({
