@@ -7,28 +7,29 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* --- COLOR PALETTE: Warm & Professional --- */
+            /* --- STYLE: THE ATLANTIC (Navy, White, Royal Blue) --- */
+            
             /* Backgrounds */
-            --bg-dark: #1E3A5F;      /* Deep slate blue */
-            --bg-cream: #FAF7F2;     /* Warm cream */
-            --bg-sage: #E8F0E8;      /* Soft sage green */
-            --bg-white: #FEFDFB;     /* Warm white */
-            --bg-gray: #F0EDEA;      /* Light warm gray */
+            --bg-hero: #0F172A;      /* Deepest Navy (almost black) */
+            --bg-white: #FFFFFF;     /* Pure Crisp White */
+            --bg-subtle: #F1F5F9;    /* Very Cool Light Gray (Mist) */
+            --bg-dark: #1E293B;      /* Slate Blue for dark sections */
             
             /* Text */
-            --text-dark: #2D3436;    /* Charcoal */
-            --text-light: #FAF7F2;   /* Warm white */
+            --text-main: #334155;    /* Slate Gray for body */
+            --text-dark: #0F172A;    /* Deep Navy for headings */
+            --text-light: #F8FAFC;   /* Off-white for dark backgrounds */
             
             /* Accent */
-            --accent: #C4785A;       /* Warm terracotta */
-            --accent-hover: #B06A4C;
+            --accent: #2563EB;       /* Royal Electric Blue */
+            --accent-soft: #DBEAFE;  /* Very light blue for backgrounds */
 
-            /* Fonts */
-            --font-heading: 'Bebas Neue', sans-serif;
+            /* Fonts - Switched Heading to Oswald for a more "Journalism" feel */
+            --font-heading: 'Oswald', sans-serif; 
             --font-body: 'Inter', sans-serif;
         }
 
@@ -41,9 +42,9 @@
 
         body {
             font-family: var(--font-body);
-            color: var(--text-dark);
+            color: var(--text-main);
             background-color: var(--bg-white);
-            line-height: 1.6;
+            line-height: 1.7;
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
@@ -55,7 +56,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 40px;
             position: relative;
@@ -68,399 +69,317 @@
             position: relative;
         }
 
-        /* Headings & Typography */
+        /* Headings */
         h1 {
             font-family: var(--font-heading);
-            font-size: clamp(3.5em, 8vw, 6em);
-            letter-spacing: 0.05em;
+            font-size: clamp(4em, 9vw, 7em);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: -0.02em; /* Tighter tracking for modern look */
             color: var(--text-light);
-            line-height: 1;
-            margin-bottom: 20px;
+            line-height: 0.9;
+            margin-bottom: 25px;
         }
 
         h2 {
             font-family: var(--font-body);
             font-weight: 300;
-            font-size: clamp(1.2em, 3vw, 1.8em);
-            margin-bottom: 30px;
-            color: var(--text-light);
-            opacity: 0.9;
+            font-size: clamp(1.2em, 2.5vw, 1.6em);
+            color: #94A3B8; /* Muted blue-gray */
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         h3 {
             font-family: var(--font-heading);
-            font-size: 3.5em;
-            letter-spacing: 0.05em;
-            margin-bottom: 60px;
+            font-size: 3em;
+            text-transform: uppercase;
             color: var(--text-dark);
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* The decorative line next to headings */
+        h3::after {
+            content: '';
+            display: block;
+            height: 4px;
+            width: 60px;
+            background: var(--accent);
         }
 
-        .section-title-accent {
+        .section-num {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.4em;
             color: var(--accent);
-            font-size: 0.6em;
-            margin-right: 15px;
-            vertical-align: middle;
+            transform: translateY(-5px);
         }
 
         strong {
             color: var(--accent);
-            font-weight: 700;
-        }
-        
-        /* Dark Section Utility */
-        .dark-section h3, 
-        .dark-section p, 
-        .dark-section li,
-        .dark-section h4 {
-            color: var(--text-light);
+            font-weight: 600;
         }
 
-        /* --- ANNOTATION / MARGINALIA SYSTEM (General) --- */
+        /* --- MARGINALIA SYSTEM (Clean & Academic) --- */
         .annotation-wrapper {
             display: grid;
-            grid-template-columns: 1fr minmax(300px, 700px) 1fr;
-            gap: 40px;
-            align-items: center;
+            grid-template-columns: 1fr minmax(300px, 750px) 1fr;
+            gap: 50px;
+            align-items: start; /* Align to top looks cleaner here */
             position: relative;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .side-note {
             font-family: var(--font-body);
-            font-size: 0.95em;
-            font-style: italic;
-            color: var(--text-dark);
-            opacity: 0.75;
+            font-size: 0.85em;
+            font-weight: 500;
+            color: #64748B;
             position: relative;
-            padding: 15px;
-            max-width: 220px;
+            padding-top: 20px;
+            border-top: 2px solid var(--accent); /* Top border looks like a footnote */
+            max-width: 200px;
+            margin-top: 15px;
         }
 
-        .note-right {
-            text-align: left;
-            border-left: 3px solid var(--accent);
-            justify-self: start;
-        }
-
-        .note-left {
-            text-align: right;
-            border-right: 3px solid var(--accent);
-            justify-self: end;
-        }
-        
+        .note-right { justify-self: start; text-align: left; }
+        .note-left { justify-self: end; text-align: right; }
         .empty-col { display: none; }
 
-        /* --- SUMMARY CARD --- */
+        /* --- SUMMARY CARD (The "Paper" Look) --- */
         .summary-card {
-            background-color: #FFFFFF;
-            padding: 50px;
-            border-radius: 8px;
-            border-left: 6px solid var(--accent);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            background-color: var(--bg-white);
+            padding: 0; /* Removed padding for a text-forward look */
             position: relative;
             z-index: 2;
         }
 
         .summary-lead {
-            font-size: 1.25em;
+            font-family: var(--font-heading); /* Switch to heading font for lead */
+            font-size: 2.2em;
             font-weight: 500;
             color: var(--text-dark);
+            line-height: 1.3;
+            margin-bottom: 30px;
             display: block;
-            margin-bottom: 20px;
-            line-height: 1.5;
         }
         
-        .highlight-term {
-            color: var(--accent);
-            font-weight: 700;
+        .summary-body {
+            font-size: 1.15em;
+            color: var(--text-main);
+            column-count: 2; /* Editorial two-column layout */
+            column-gap: 40px;
         }
 
-        /* --- SKILLS STACK LAYOUT (New Syllabus Style) --- */
+        /* --- SKILLS STACK (Clean Technical List) --- */
         .skills-stack {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 0; /* No gap, connected border look */
             max-width: 1000px;
             margin: 0 auto;
+            border-top: 1px solid #E2E8F0;
         }
 
         .skill-row {
             display: grid;
-            grid-template-columns: 1.8fr 1fr; /* Card 65% | Note 35% */
-            gap: 40px;
-            align-items: center;
-        }
-
-        .skill-card {
-            background: #FFFFFF;
-            padding: 35px;
-            border-radius: 6px;
-            border-left: 5px solid var(--accent);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-            transition: transform 0.2s ease;
-        }
-        
-        .skill-card:hover {
-            transform: translateX(5px);
+            grid-template-columns: 2fr 1fr; 
+            gap: 60px;
+            border-bottom: 1px solid #E2E8F0; /* Separator lines */
+            padding: 40px 0;
         }
 
         .skill-card h4 {
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 1.25em;
-            margin-bottom: 15px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-family: var(--font-heading);
+            font-size: 1.5em;
+            color: var(--text-dark);
+            margin-bottom: 20px;
         }
 
         .skill-card ul {
             list-style: none;
             padding: 0;
-            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
+        /* Skill tags instead of list */
         .skill-card li {
-            padding: 6px 0;
-            border-bottom: 1px dashed var(--bg-sage);
-            font-size: 1em;
+            background: var(--bg-subtle);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 500;
             color: var(--text-dark);
-        }
-        
-        .skill-card li:last-child {
-            border-bottom: none;
+            border: 1px solid #E2E8F0;
         }
 
         .stack-note {
-            font-family: var(--font-body);
-            font-size: 0.95em;
+            font-size: 0.9em;
+            color: #64748B;
             font-style: italic;
-            color: var(--text-dark);
-            opacity: 0.7;
-            position: relative;
+            border-left: 3px solid var(--accent);
             padding-left: 20px;
-            border-left: 2px solid var(--accent);
-            line-height: 1.6;
         }
 
         /* --- EDUCATION GRID --- */
         .education-grid {
-            display: flex;
-            justify-content: space-between;
-            gap: 30px;
-            flex-wrap: wrap; 
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .education-item {
-            flex: 1;
-            min-width: 280px;
-            padding: 30px;
-            background: #FFFFFF;
-            border-radius: 8px;
-            border-top: 4px solid var(--accent);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--bg-subtle);
+            padding: 40px;
+            border-left: 4px solid var(--text-dark); /* Dark border for gravitas */
         }
         
-        .education-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
         .education-item h4 {
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 1.25em;
-            margin-bottom: 15px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-family: var(--font-heading);
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: var(--text-dark);
         }
 
         .edu-institution {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 5px;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.05em;
         }
 
-        /* --- SECTION BACKGROUNDS & GRADIENTS --- */
-        #hero-section {
-            background-color: var(--bg-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        #summary {
-            background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-cream) 15%, var(--bg-cream) 100%);
-        }
-
-        #skills {
-            background: linear-gradient(to bottom, var(--bg-cream) 0%, var(--bg-sage) 15%, var(--bg-sage) 100%);
-        }
-
-        #experience {
-            background: linear-gradient(to bottom, var(--bg-sage) 0%, var(--bg-white) 15%, var(--bg-white) 100%);
-        }
-
-        #education {
-            background: linear-gradient(to bottom, var(--bg-white) 0%, var(--bg-gray) 15%, var(--bg-gray) 100%);
-        }
+        /* --- SECTIONS COLORING --- */
+        #hero-section { background-color: var(--bg-hero); text-align: center; display: flex; align-items: center; justify-content: center; }
+        #summary { background-color: var(--bg-white); }
+        #skills { background-color: var(--bg-white); }
+        #experience { background-color: var(--bg-subtle); } /* Subtle gray for timeline */
+        #education { background-color: var(--bg-white); }
+        #awards { background-color: var(--bg-dark); color: var(--text-light); }
         
-        #awards {
-            background: linear-gradient(to bottom, var(--bg-gray) 0%, var(--bg-dark) 15%, var(--bg-dark) 100%);
-        }
-        
-        footer {
-            background: linear-gradient(to bottom, var(--bg-dark) 0%, var(--bg-cream) 15%, var(--bg-cream) 100%);
-            color: var(--text-dark);
-            padding: 100px 0 50px 0;
-            text-align: center;
-        }
-
-        /* --- TIMELINE STYLING --- */
-        .timeline-section { padding-top: 80px; }
+        /* --- TIMELINE (Clean & Technical) --- */
+        .timeline-section { padding-top: 100px; }
         .timeline-container {
             display: flex;
             flex-direction: column;
-            padding: 20px 0;
             position: relative;
+            max-width: 900px;
+            margin: 0 auto;
         }
-
+        
+        /* The Line */
         .timeline-container::before {
             content: '';
             position: absolute;
-            left: 50%;
+            left: 0; /* Line on LEFT side now (more standard for docs) */
             top: 0;
             bottom: 0;
-            width: 3px;
-            background-color: var(--bg-sage);
-            transform: translateX(-50%);
+            width: 1px;
+            background-color: #CBD5E1;
         }
 
         .timeline-item {
             display: flex;
-            justify-content: space-between;
-            margin: 60px 0;
+            margin-bottom: 60px;
             position: relative;
+            padding-left: 50px; /* Space from line */
         }
 
-        .timeline-item:nth-child(odd) { flex-direction: row-reverse; }
-        
-        /* Fixed Alignment: Titles hug center, content aligns appropriately */
-        .timeline-item:nth-child(odd) .timeline-content { text-align: right; padding-right: 60px; }
-        .timeline-item:nth-child(even) .timeline-content { text-align: left; padding-left: 60px; }
-
-        .timeline-date {
-            font-family: var(--font-heading);
-            font-size: 1.8em;
-            color: var(--accent);
-            width: 15%;
-            text-align: center;
-            flex-shrink: 0; 
-            z-index: 10;
-            position: relative; 
-        }
-
-        .timeline-date::after {
+        /* The Dot */
+        .timeline-item::before {
             content: '';
             position: absolute;
-            top: 50%;
-            width: 16px;
-            height: 16px;
-            background-color: var(--accent);
-            border: 3px solid var(--bg-white);
+            left: -5px; /* Centered on line */
+            top: 0;
+            width: 11px;
+            height: 11px;
+            background-color: var(--bg-white);
+            border: 2px solid var(--accent);
             border-radius: 50%;
-            transform: translateY(-50%);
-            z-index: 11;
-            box-shadow: 0 0 0 2px var(--bg-sage);
+            z-index: 10;
         }
 
-        .timeline-item:nth-child(even) .timeline-date::after { right: -8px; }
-        .timeline-item:nth-child(odd) .timeline-date::after { left: -8px; }
+        /* Active dot */
+        .timeline-item.active::before {
+            background-color: var(--accent);
+        }
+
+        .timeline-date {
+            min-width: 120px;
+            font-family: var(--font-heading);
+            font-size: 1.2em;
+            color: var(--accent);
+            font-weight: 500;
+            padding-top: 0;
+            margin-right: 30px;
+        }
 
         .timeline-content {
-            width: 42%;
-            padding: 30px;
-            background: #FFFFFF;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            flex-grow: 1; 
-            border-left: 4px solid var(--accent);
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content {
-            border-left: none;
-            border-right: 4px solid var(--accent);
+            flex-grow: 1;
         }
 
         .timeline-content h4 {
-            font-family: var(--font-body);
-            font-weight: 700;
-            font-size: 1.3em;
+            font-family: var(--font-heading);
+            font-size: 1.5em;
             margin-bottom: 5px;
             color: var(--text-dark);
         }
 
         .job-location {
-            font-weight: 500;
-            font-size: 0.95em;
+            font-size: 0.9em;
+            color: #64748B;
             margin-bottom: 15px;
-            color: #666;
+            font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
-        /* Timeline Fix: Force left alignment for list items */
-        .timeline-content ul { list-style-type: none; padding-left: 0; text-align: left; }
-        .timeline-content li { position: relative; padding-left: 20px; margin-bottom: 10px; color: var(--text-dark); }
-        .timeline-content li::before { content: '—'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+        .timeline-content ul {
+            list-style: none;
+            padding: 0;
+            border-left: 2px solid #E2E8F0; /* Content line */
+            padding-left: 20px;
+        }
+        
+        .timeline-content li {
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
 
         /* --- FOOTER & AWARDS --- */
-        #awards .awards-list h4 {
-            font-family: var(--font-heading);
-            font-size: 2em;
-            letter-spacing: 0.05em;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 10px;
-            color: var(--text-light);
+        #awards h3, #awards h4 { color: var(--text-light); }
+        #awards .awards-list { max-width: 800px; margin: 0 auto; }
+        #awards ul { list-style: none; padding: 0; margin-bottom: 40px; }
+        #awards li { 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            padding: 15px 0; 
+            font-size: 1.1em;
         }
+        #awards li strong { color: var(--accent); }
 
-        #awards .awards-list ul { list-style: none; }
-        #awards .awards-list li { margin-bottom: 15px; padding-left: 25px; position: relative; font-size: 1.1em; font-weight: 300; }
-        #awards .awards-list li::before { content: '★'; color: var(--accent); position: absolute; left: 0; top: 2px; }
+        footer {
+            background-color: var(--bg-hero);
+            color: var(--text-light);
+            padding: 100px 0 50px 0;
+            text-align: center;
+        }
+        .footer-title { font-family: var(--font-heading); font-size: 4em; margin-bottom: 20px; letter-spacing: -0.02em;}
+        .footer-contact a { color: var(--text-light); text-decoration: none; border-bottom: 1px solid var(--accent); }
 
-        .footer-title { font-family: var(--font-heading); font-size: 4em; color: var(--accent); margin-bottom: 20px; }
-        .footer-contact p { font-size: 1.4em; margin: 10px 0; font-weight: 500; }
-        .footer-contact a { color: var(--text-dark); text-decoration: none; border-bottom: 2px solid var(--accent); transition: color 0.3s; }
-        .footer-contact a:hover { color: var(--accent); }
-        .copyright { margin-top: 60px; font-size: 0.9em; color: #666; }
-        .hero-contact { margin-top: 20px; font-size: 1.2em; color: var(--text-light); opacity: 0.8; }
-
-        /* --- MOBILE RESPONSIVENESS --- */
-        @media (max-width: 1000px) {
-            /* Annotation Stack Logic */
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
             .annotation-wrapper { grid-template-columns: 1fr; display: block; }
-            .side-note { display: none; }
-            
-            /* Skill Stack Logic */
-            .skill-row { display: flex; flex-direction: column; gap: 15px; }
-            .stack-note { border-left: none; border-top: 2px solid var(--accent); padding-left: 0; padding-top: 15px; margin-bottom: 30px; }
-            
-            /* Timeline Logic */
-            .timeline-container::before { left: 20px; }
-            .timeline-item, .timeline-item:nth-child(odd) { flex-direction: column; align-items: flex-start; margin: 40px 0; }
-            .timeline-date { width: auto; text-align: left; margin-bottom: 15px; margin-left: 45px; font-size: 1.5em; }
-            .timeline-content, .timeline-item:nth-child(odd) .timeline-content { width: 100%; text-align: left; padding: 25px; border: none; border-left: 4px solid var(--accent); }
-            .timeline-date::after { left: 13px !important; right: auto !important; }
+            .side-note { border-top: none; border-left: 2px solid var(--accent); padding-top: 0; padding-left: 15px; margin-bottom: 30px; text-align: left !important; justify-self: start; max-width: 100%; }
+            .summary-body { column-count: 1; }
+            .skill-row { grid-template-columns: 1fr; gap: 20px; }
+            .education-grid { grid-template-columns: 1fr; }
+            .timeline-item { flex-direction: column; }
+            .timeline-date { margin-bottom: 10px; }
             h1 { font-size: 3.5em; }
-            h3 { font-size: 2.5em; margin-bottom: 40px;}
-            .section { padding: 80px 0; }
         }
     </style>
 </head>
@@ -468,30 +387,27 @@
 
     <header id="hero-section" class="section">
         <div class="container hero-content">
-            <h1>DAVID C. TRAN</h1>
-            <h2>Writer, Educator & Curriculum Strategist</h2>
-            <p class="hero-contact">
-                trandavidc@gmail.com | Miami, FL
-            </p>
+            <h1>David C. Tran</h1>
+            <h2>Writer <span style="color:var(--accent)">/</span> Educator <span style="color:var(--accent)">/</span> Strategist</h2>
         </div>
     </header>
 
     <main>
         <section id="summary" class="section">
             <div class="container">
-                <h3><span class="section-title-accent">01.</span> Professional Summary</h3>
+                <h3><span class="section-num">01.</span> Summary</h3>
                 
                 <div class="annotation-wrapper">
                     <div class="side-note note-left">
-                        "Spanning the evolution from chalkboard to iPad to AI."
+                        "From chalkboard to iPad to AI."
                     </div>
 
                     <div class="summary-card">
                         <span class="summary-lead">
-                            Writing coach and English educator with <span class="highlight-term">20+ years of experience</span> building scalable curriculum systems.
+                            Writing coach and English educator with <span style="color:var(--accent)">20+ years of experience</span> building scalable curriculum systems.
                         </span>
                         <div class="summary-body">
-                            Expert in coaching students through high-stakes writing processes. Proven track record of scaling writing programs to <span class="highlight-term">400+ students</span> while maintaining 1:1 mentorship quality. Leading institutional adoption of <span class="highlight-term">ethical AI practices</span> to teach students <em>how</em> to prompt, but <em>why</em> to write.
+                            Expert in coaching students through high-stakes writing processes, from college essays to analytical composition, while developing faculty capacity through targeted professional development. Proven track record of scaling writing programs from 150 to <strong>400+ students</strong>, designing equity-driven learning supports for diverse populations, and leading institutional adoption of <strong>ethical AI practices</strong> in education. Combines advanced degrees in creative writing with practical expertise in differentiated instruction, assessment design, and educational technology.
                         </div>
                     </div>
 
@@ -504,7 +420,7 @@
 
         <section id="skills" class="section">
             <div class="container">
-                <h3><span class="section-title-accent">02.</span> Core Skills & Expertise</h3>
+                <h3><span class="section-num">02.</span> Expertise</h3>
                 
                 <div class="skills-stack">
                     
@@ -512,10 +428,10 @@
                         <div class="skill-card">
                             <h4>AI Integration & EdTech</h4>
                             <ul>
-                                <li>Ethical AI Implementation & Policy</li>
-                                <li>Generative AI Workflows for Faculty</li>
-                                <li>AI-Assisted Research & Writing</li>
-                                <li>Learning Management Systems (LMS)</li>
+                                <li>Ethical AI Implementation</li>
+                                <li>Generative AI Workflows</li>
+                                <li>AI-Assisted Research</li>
+                                <li>LMS Architecture</li>
                             </ul>
                         </div>
                         <div class="stack-note">
@@ -528,8 +444,8 @@
                             <h4>Instruction & Coaching</h4>
                             <ul>
                                 <li>College Essay Coaching</li>
-                                <li>Composition Pedagogy & Feedback</li>
-                                <li>Narrative Structure & Voice Development</li>
+                                <li>Composition Pedagogy</li>
+                                <li>Narrative Structure</li>
                                 <li>Differentiated Instruction</li>
                             </ul>
                         </div>
@@ -540,10 +456,10 @@
                         <div class="skill-card">
                             <h4>Program Leadership</h4>
                             <ul>
-                                <li>Curriculum Development & Scaling</li>
-                                <li>Faculty Development & Training</li>
-                                <li>Assessment & Data-Informed Practice</li>
-                                <li>Equity-Driven Pedagogy (504, IEP, ESE)</li>
+                                <li>Curriculum Scaling</li>
+                                <li>Faculty Development</li>
+                                <li>Data-Informed Practice</li>
+                                <li>Equity-Driven Pedagogy</li>
                             </ul>
                         </div>
                         <div class="stack-note">
@@ -557,123 +473,120 @@
 
         <section id="experience" class="section timeline-section">
             <div class="container">
-                <h3><span class="section-title-accent">03.</span> Job History & Experience</h3>
+                <h3><span class="section-num">03.</span> Experience</h3>
                 
                 <div class="timeline-container">
-                    <article class="timeline-item">
+                    <div class="timeline-item">
                         <div class="timeline-date">2025 – Pres.</div>
                         <div class="timeline-content">
                             <h4>College Essay Writing Coach</h4>
                             <p class="job-location">Gulliver Preparatory School, Pinecrest, FL</p>
                             <ul>
                                 <li>Coached high school juniors and seniors through the complete college essay writing process (Common App & supplements).</li>
-                                <li>Designed comprehensive college essay curriculum with semester-long asynchronous modules and monthly touchpoints.</li>
-                                <li>Led professional development presentations on college essay instruction and <strong>ethical AI integration</strong>.</li>
-                                <li>Created equity-driven strategies to support diverse student populations, emphasizing <strong>authentic voice</strong>.</li>
+                                <li>Designed comprehensive college essay curriculum with semester-long asynchronous modules.</li>
+                                <li>Led professional development on <strong>ethical AI integration</strong>.</li>
                             </ul>
                         </div>
-                    </article>
+                    </div>
                     
-                    <article class="timeline-item">
+                    <div class="timeline-item">
                         <div class="timeline-date">2021 – 2024</div>
                         <div class="timeline-content">
                             <h4>English Composition & Lit Teacher</h4>
                             <p class="job-location">IMG Academy, Bradenton, FL</p>
                             <ul>
-                                <li>Designed a writing-intensive curriculum emphasizing analytical essays and research papers for student-athletes.</li>
-                                <li>Integrated AI tools and digital platforms, leading <strong>college essay workshops</strong> supporting 400+ students.</li>
-                                <li>Conducted faculty training sessions on rubric design, <strong>AI-assisted research</strong>, and differentiated instruction.</li>
-                                <li>Collaborated with the Learning Resource Center to support students with 504 plans and IEPs.</li>
+                                <li>Designed a writing-intensive curriculum emphasizing analytical essays and research papers.</li>
+                                <li>Led <strong>college essay workshops</strong> supporting 400+ students annually.</li>
+                                <li>Conducted faculty training on <strong>AI-assisted research</strong> and rubric design.</li>
                             </ul>
                         </div>
-                    </article>
+                    </div>
                     
-                    <article class="timeline-item">
+                    <div class="timeline-item">
                         <div class="timeline-date">2017 – 2020</div>
                         <div class="timeline-content">
                             <h4>Director of Learning Lab</h4>
                             <p class="job-location">Country Day School, Largo, FL</p>
                             <ul>
-                                <li>Directed the Learning Lab, overseeing learning specialists and academic interventions for students with diverse needs.</li>
-                                <li>Developed individualized education plans (IEPs) in collaboration with families and faculty, achieving an <strong>85% success rate</strong>.</li>
-                                <li>Provided professional development workshops on technology integration, writing instruction, and student advocacy.</li>
+                                <li>Directed the Learning Lab, overseeing learning specialists and academic interventions.</li>
+                                <li>Achieved an <strong>85% success rate</strong> in meeting student IEP goals.</li>
+                                <li>Provided professional development on technology integration and writing instruction.</li>
                             </ul>
                         </div>
-                    </article>
-                    
-                    <article class="timeline-item">
+                    </div>
+
+                    <div class="timeline-item">
                         <div class="timeline-date">2013 – 2017</div>
                         <div class="timeline-content">
                             <h4>University Instructor</h4>
                             <p class="job-location">University of Mississippi, Oxford, MS</p>
                             <ul>
-                                <li>Taught senior-level Creative Writing, first-year Composition, and American/British literature courses.</li>
-                                <li>Integrated multimodal learning approaches, including <strong>digital portfolios</strong>, to increase student engagement.</li>
-                                <li>Provided individualized mentorship and feedback to enhance students' writing and critical thinking skills.</li>
+                                <li>Taught senior-level Creative Writing, first-year Composition, and Literature.</li>
+                                <li>Integrated <strong>digital portfolios</strong> to increase student engagement.</li>
                             </ul>
                         </div>
-                    </article>
+                    </div>
                     
-                    <article class="timeline-item">
+                    <div class="timeline-item">
                         <div class="timeline-date">2007 – 2012</div>
                         <div class="timeline-content">
                             <h4>Writing Teacher</h4>
                             <p class="job-location">Balboa School, San Diego, CA</p>
                             <ul>
-                                <li>Developed and implemented writing curricula emphasizing personal voice, rhetorical strategies, and argumentation.</li>
-                                <li>Worked closely with ESE students, updating IEPs and tailoring instruction to diverse learning styles.</li>
-                                <li>Facilitated writing workshops to improve student skills in organization, public speaking, and composition.</li>
+                                <li>Developed and implemented writing curricula emphasizing personal voice and rhetoric.</li>
+                                <li>Tailored instruction for diverse learning styles and ESE students.</li>
                             </ul>
                         </div>
-                    </article>
+                    </div>
+
                 </div>
             </div>
         </section>
         
         <section id="education" class="section">
             <div class="container">
-                <h3><span class="section-title-accent">04.</span> Education & Certifications</h3>
+                <h3><span class="section-num">04.</span> Education</h3>
                 
                 <div class="annotation-wrapper">
                     <div class="side-note note-left">
                         "Creative writing is the ultimate training in empathy, structure, and persuasion—the core of all good curriculum."
                     </div>
 
-                    <div class="education-item">
-                        <h4>MFA in Creative Writing & Literature</h4>
-                        <p class="edu-institution">University of Mississippi, Oxford, MS</p>
-                        <p class="edu-detail">John Grisham Scholarship (Full Ride & Stipend)</p>
+                    <div class="education-grid">
+                        <div class="education-item">
+                            <h4>MFA in Creative Writing</h4>
+                            <p class="edu-institution">University of Mississippi</p>
+                            <p>John Grisham Scholarship (Full Ride)</p>
+                        </div>
+                        
+                        <div class="education-item">
+                            <h4>BFA in Creative Writing</h4>
+                            <p class="edu-institution">Bowling Green State University</p>
+                        </div>
+                        
+                        <div class="education-item">
+                            <h4>Certification in TESOL</h4>
+                            <p class="edu-institution">Specialization in English Learners</p>
+                        </div>
                     </div>
-                    
-                    <div class="empty-col"></div> </div>
 
-                <div class="education-grid">
-                    <div class="education-item">
-                        <h4>BFA in Creative Writing & Literature</h4>
-                        <p class="edu-institution">Bowling Green State University, Bowling Green, OH</p>
-                    </div>
-                    
-                    <div class="education-item">
-                        <h4>Certification in TESOL/TESL/TEFL</h4>
-                        <p class="edu-detail">Specialization in English Language Learners</p>
-                    </div>
+                    <div class="empty-col"></div>
                 </div>
             </div>
         </section>
         
-        <section id="awards" class="section dark-section">
+        <section id="awards" class="section">
             <div class="container">
-                <h3><span class="section-title-accent">05.</span> Leadership & Awards</h3>
+                <h3><span class="section-num">05.</span> Leadership</h3>
                 <div class="awards-list">
                     
-                    <h4>Professional Development & Leadership</h4>
                     <ul>
-                        <li>Designed and delivered PD on integrating <strong>generative AI workflows</strong> in education, reaching 200+ faculty members across multiple schools.</li>
-                        <li>Led 20+ cross-disciplinary workshops on AI-assisted content creation, resulting in <strong>75% of participants adopting AI tools</strong>.</li>
-                        <li>Created faculty training programs on rubric design, differentiated instruction, and effective feedback strategies.</li>
+                        <li>Designed and delivered PD on <strong>generative AI workflows</strong> reaching 200+ faculty.</li>
+                        <li>Led 20+ workshops on AI-assisted content creation (75% adoption rate).</li>
+                        <li>Created faculty training programs on rubric design and feedback strategies.</li>
                     </ul>
 
-                    <h4>Publications and Awards</h4>
+                    <h4>Awards & Pubs</h4>
                     <ul>
                         <li>University of Mississippi Bondurant Award (Prose)</li>
                         <li>University of Mississippi Stayton Award (Prose & CNF)</li>
@@ -684,14 +597,14 @@
         </section>
 
         <footer id="contact">
-            <div class="container footer-content">
+            <div class="container">
                 <h2 class="footer-title">LET'S CONNECT</h2>
                 <div class="footer-contact">
-                    <p><a href="mailto:trandavidc@gmail.com">trandavidc@gmail.com</a></p>
+                    <p>trandavidc@gmail.com</p>
                     <p>Miami, FL</p>
                 </div>
                 <div class="copyright">
-                    &copy; 2025 David C. Tran. All Rights Reserved.
+                    &copy; 2025 David C. Tran.
                 </div>
             </div>
         </footer>
@@ -703,67 +616,44 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
-            
             gsap.registerPlugin(ScrollTrigger);
 
-            // --- CINEMATIC ZOOM EFFECT FOR TIMELINE ---
+            // Animate Timeline Items
             const timelineItems = document.querySelectorAll('.timeline-item');
             
             timelineItems.forEach((item) => {
-                // Initial state
-                gsap.set(item, { scale: 0.9, opacity: 0.5 });
-
+                // Subtle fade up
+                gsap.from(item, {
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.8,
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+                
+                // Active class for the dot
                 ScrollTrigger.create({
                     trigger: item,
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true,
-                    
-                    onUpdate: (self) => {
-                        const progress = self.progress;
-                        
-                        // Sine wave math for peek center effect
-                        let scaleValue = 0.9 + (0.1 * Math.sin(progress * Math.PI));
-                        let opacityValue = 0.5 + (0.5 * Math.sin(progress * Math.PI));
-
-                        gsap.set(item, {
-                            scale: scaleValue,
-                            opacity: opacityValue
-                        });
-
-                        if (progress > 0.25 && progress < 0.75) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
-                        }
-                    }
+                    start: "top center",
+                    end: "bottom center",
+                    toggleClass: "active"
                 });
             });
 
-            // --- FADE IN FOR SECTIONS ---
-            document.querySelectorAll('section:not(#hero-section):not(.timeline-section)').forEach(section => {
-                gsap.from(section.querySelector('.container'), {
+            // Section Headers Slide In
+            document.querySelectorAll('h3').forEach(header => {
+                gsap.from(header, {
+                    x: -30,
                     opacity: 0,
-                    y: 40,
                     duration: 1,
                     scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%",
-                        toggleActions: "play none none none"
+                        trigger: header,
+                        start: "top 80%"
                     }
                 });
-            });
-            
-            // --- FADE IN FOR FOOTER ---
-            gsap.from(".footer-content", {
-                opacity: 0,
-                y: 30,
-                duration: 1.5,
-                scrollTrigger: {
-                    trigger: "footer",
-                    start: "top 85%",
-                    toggleActions: "play none none none"
-                }
             });
             
             ScrollTrigger.refresh();
