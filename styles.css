@@ -1,249 +1,236 @@
-/* styles.css */
-
-/* General Reset and Font */
+/* --- 1. Color and Global Reset --- */
 :root {
-    --sidebar-width: 350px; /* Slightly wider sidebar for better presence */
-    --dark-text: #1a1a1a;
-    --light-text: #f0f0f0;
-    --accent-color: #FFC107; /* Brighter accent color for pop */
-    --font-heading: 'Poppins', sans-serif;
-    --font-body: 'Lora', serif; /* New: Serif for editorial feel */
+    --color-dark: #0f0f0f;
+    --color-off-white: #e8e4df;
+    --color-accent-gold: #c9a227;
+    --color-muted: rgba(232, 228, 223, 0.6);
+    --color-rule: rgba(232, 228, 223, 0.2); /* 20% opacity for separators */
+    --padding-v: 15vh;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
+/* Background Grain Texture for Filmic Depth */
 body {
+    background-color: var(--color-dark);
+    /* Placeholder for subtle grain texture. In production, use a base64 encoded image or a small, repeating PNG/SVG here. */
+    /* Example: background: var(--color-dark) url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=') repeat; */
+    color: var(--color-off-white);
+    font-family: 'Inter', sans-serif;
     margin: 0;
-    font-family: var(--font-body);
-    height: 100vh;
-    overflow: hidden; 
-    color: var(--light-text);
-}
-
-/* --- Layout Wrapper --- */
-#wrapper {
-    display: flex;
-    height: 100vh;
-}
-
-/* 1. Static Sidebar (The Anchor) */
-#sidebar {
-    width: var(--sidebar-width); 
-    padding: 40px 50px; /* Increased padding */
-    background-color: var(--dark-text); 
-    flex-shrink: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-#sidebar h1 {
-    font-size: 2.8em;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 0;
-}
-
-#sidebar h2#specialization {
-    font-size: 1.2em;
-    font-weight: 300;
-    color: var(--accent-color);
-    margin-top: 5px;
-}
-
-#sidebar #location {
-    font-weight: 300;
-    color: #aaa;
-    margin-bottom: 20px;
-}
-
-.divider {
-    height: 1px;
-    background-color: var(--accent-color);
-    margin: 30px 0;
-    opacity: 0.5;
-}
-
-.summary-text {
-    font-weight: 400; /* Medium weight for readability */
-    line-height: 1.7;
-    flex-grow: 1; 
-}
-.summary-text strong {
-    color: var(--accent-color);
-}
-
-.contact-btn {
-    display: block;
-    padding: 12px 20px;
-    text-align: center;
-    background-color: var(--accent-color);
-    color: var(--dark-text);
-    text-decoration: none;
-    font-weight: 600;
-    font-family: var(--font-heading);
-    border-radius: 4px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.contact-btn:hover {
-    background-color: #fce83a;
-    transform: translateY(-2px);
-}
-
-/* 2. Scrollable Content Area */
-#content-scroll-area {
-    flex-grow: 1; 
-    overflow-y: scroll;
-    background-color: #3F51B5; 
-    transition: background-color 0.8s ease-out; 
-    scroll-behavior: smooth;
-
-    /* AESTHETIC: Fading Edges for Fluidity */
-    box-shadow: inset 0 20px 20px -20px var(--dark-text), 
-                inset 0 -20px 20px -20px var(--dark-text);
-    /* This creates the illusion that content fades into a 'fog' at the top/bottom */
-}
-
-/* Content Sections */
-section {
     min-height: 100vh;
-    padding: 100px 100px; /* Increased horizontal padding */
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    font-weight: 400; /* Minimum weight set to 400 */
+}
+
+/* Accent Class for Name, CTA, and other Gold elements */
+.accent-text {
+    color: var(--color-accent-gold);
+}
+
+/* --- 2. Typography & Hierarchy --- */
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Applicant Name: Largest Element (4rem, tracked out) */
+.name-header {
+    font-size: 4rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+}
+
+/* Section Headings: 2rem, Generous spacing */
+.section-heading {
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+}
+
+/* Body Text and Details */
+p, li {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
     line-height: 1.6;
 }
 
-section h2 {
-    font-size: 3.5em;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    margin-bottom: 60px;
-}
-section h3 {
-    font-family: var(--font-heading);
+/* Muted Text for Dates and Secondary Info */
+.muted-text {
+    color: var(--color-muted);
+    font-size: 0.9rem;
 }
 
-/* --- Expertise Grid --- */
-.expertise-grid {
-    display: flex;
-    gap: 50px;
-    margin-top: 20px;
-}
-.expertise-block {
-    flex: 1;
-    padding: 20px;
-    border-left: 3px solid rgba(255, 255, 255, 0.2);
-}
-.expertise-block h3 {
-    color: var(--accent-color);
-    margin-top: 0;
-    font-size: 1.3em;
-}
-.expertise-block ul {
-    list-style: none;
-    padding: 0;
-    font-family: var(--font-body);
-}
-.expertise-block li {
-    padding: 8px 0;
-    font-weight: 300;
+/* Small Caps for Contact Labels */
+.label {
+    font-weight: 500;
+    font-variant: small-caps;
+    margin-right: 0.5rem;
+    color: var(--color-muted);
 }
 
-/* --- Timeline Styling (The Sequence) --- */
-.timeline {
-    position: relative;
-    padding-left: 30px; 
-}
 
-.timeline::before {
-    content: '';
-    position: absolute;
+/* --- 3. Layout: Vertical Scroll as Narrative --- */
+.sidebar-anchor {
+    position: fixed;
     top: 0;
-    left: 10px;
-    width: 3px; /* Slightly thicker line */
-    height: 100%;
-    background: rgba(255, 255, 255, 0.15); /* Subtler vertical line */
+    left: 0;
+    width: 25vw;
+    height: 100vh;
+    padding: 5vh 2vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--color-dark); /* Ensure sidebar covers content behind it */
+    z-index: 10;
 }
 
-.timeline-item {
-    position: relative;
-    margin-bottom: 80px; /* More vertical space for airiness */
-    padding: 0 0 0 30px;
-    opacity: 0.9; 
-    transition: opacity 0.4s ease-in-out;
+.content-scroll {
+    width: 75vw;
+    margin-left: 25vw; /* Offset to make room for the fixed sidebar */
+    padding-left: 5vw;
+    padding-right: 5vw;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
-.timeline-item:hover {
-    opacity: 1; 
+/* Each Section is a Full "Scene" */
+.scroll-section {
+    padding-top: var(--padding-v);
+    padding-bottom: var(--padding-v);
+    border-bottom: 1px solid var(--color-rule); /* Optional: Soft rule between sections */
+}
+.scroll-section:last-child {
+    border-bottom: none;
 }
 
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    left: 3px;
-    top: 5px;
-    border: 3px solid var(--light-text);
+/* Section Punctuation: Thin horizontal rule above heading */
+.section-rule {
+    border: none;
+    border-top: 1px solid var(--color-rule);
+    width: 100%;
+    margin-bottom: 3rem;
+    opacity: 1; /* Already handled by color opacity */
 }
 
-.timeline-item h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.6em;
-    font-weight: 600;
-    color: var(--accent-color);
+
+/* Expertise Stacking */
+.expertise-pillar {
+    margin-bottom: 2.5rem;
+}
+.pillar-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.pillar-separator {
+    border: none;
+    border-top: 1px solid var(--color-rule);
+    width: 100%;
+    margin: 2rem 0;
+}
+.expertise-pillar:last-of-type {
+    margin-bottom: 0;
+}
+.expertise-pillar:last-of-type + .pillar-separator {
+    display: none;
 }
 
-.timeline-item h4 {
-    margin: 0 0 10px 0;
-    font-weight: 400;
-    font-size: 1em;
-    opacity: 0.8;
+
+/* Timeline (Experience/Education) Styling */
+.timeline-entry {
+    margin-bottom: 4rem;
+    padding-left: 0; /* Remove default indentation */
+}
+.timeline-entry:last-child {
+    margin-bottom: 0;
+}
+/* Use only whitespace and indentation */
+.role-title-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.25rem;
+}
+.role-title {
+    font-family: 'Inter', sans-serif;
+    text-transform: none;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin: 0;
+}
+.company-name {
+    margin: 0 0 1rem 0;
+    font-style: italic;
+    color: var(--color-muted);
+}
+.role-date {
+    /* Right-aligned is handled by flexbox */
+    white-space: nowrap;
+}
+.role-details {
+    list-style: none; /* Remove list markers entirely */
+    padding-left: 1.5rem; /* Subtle indentation */
+    margin-top: 0.5rem;
+}
+.role-details li {
+    margin-bottom: 0.75rem; /* Line spacing replaces markers */
 }
 
-.timeline-item .date {
-    display: block;
-    font-family: var(--font-heading); /* Use Poppins for dates */
-    font-style: normal;
-    font-size: 0.8em;
-    margin-bottom: 5px;
-    opacity: 0.6;
+
+/* Contact Section in Sidebar */
+.contact-section {
+    padding-top: 2rem;
+    text-align: center;
+}
+.contact-label {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+}
+.contact-details p {
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+}
+.contact-details .label {
+    display: none; /* Keep label in code for accessibility, but center layout often omits it visually */
 }
 
-.timeline-item ul {
-    list-style-type: '→ '; /* Clearer list marker */
-    margin-left: 20px;
-    padding-left: 0;
-    font-weight: 300;
+
+/* --- 4. Motion & CTA --- */
+
+/* Initial hidden state for scroll-triggered fade-in */
+.section-hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+/* Visible state */
+.section-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.timeline-item ul strong {
-    font-weight: 600;
+/* CTA Button Styling */
+.cta-button {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    margin-top: 4rem;
+    background-color: var(--color-accent-gold);
+    color: var(--color-dark); /* Invert color scheme on default */
+    border: 1px solid var(--color-accent-gold);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* --- Education & Contact --- */
-.education-block {
-    margin-bottom: 60px;
-}
-.education-block h3 {
-    color: var(--accent-color);
-    margin-bottom: 25px;
-    font-size: 1.4em;
-}
-
-.contact-info a {
-    color: var(--light-text);
-    text-decoration: underline;
-    transition: color 0.3s;
-}
-.contact-info a:hover {
-    color: var(--accent-color);
+/* CTA Hover: Color Invert (No Movement) */
+.cta-button:hover {
+    background-color: var(--color-dark);
+    color: var(--color-accent-gold);
 }
